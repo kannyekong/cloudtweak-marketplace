@@ -1,0 +1,309 @@
+---
+import Layout from '~/layouts/PrimaryLayout.astro';
+import OrderCompletion from './OrderCompletion.tsx';
+import { getStorefrontOrder, type StorefrontOrderDetails } from '~/lib/tweakmart/storefront-orders';
+
+const { order_number: orderNumber } = Astro.params;
+
+const accessToken = Astro.url.searchParams.get('token');
+
+const placed = Astro.url.searchParams.get('placed') === '1';
+
+const paymentSuccess = Astro.url.searchParams.get('payment') === 'success';
+
+let order: StorefrontOrderDetails | null = null;
+
+if (orderNumber && accessToken) {
+	order = await getStorefrontOrder(orderNumber, accessToken);
+}
+
+if (!order) {
+	Astro.response.status = 404;
+}
+
+/* Formats order monetary values using the order currency. */
+function formatMoney(value: number, currency: string) {
+	return new Intl.NumberFormat('en-NG', {
+		style: 'currency',
+		currency: currency || 'NGN',
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2,
+	}).format(value);
+}
+
+/* Formats database timestamps into a customer-friendly Nigerian date. */
+function formatDate(value: string) {
+	return new Intl.DateTimeFormat('en-NG', {
+		dateStyle: 'long',
+		timeStyle: 'short',
+	}).format(new Date(value));
+}
+
+/* Converts internal status identifiers into readable customer text. */
+function formatStatus(value: string) {
+	return value.replaceAll('_', ' ').replace(/\b\w/g, (character) => character.toUpperCase());
+}
+
+/* Returns a friendly label for the selected order payment method. */
+function formatPaymentMethod(value: string) {
+	if (value === 'pay_on_delivery') {
+		return 'Pay on Delivery';
+	}
+
+	if (value === 'paystack') {
+		return 'Paystack';
+	}
+
+	return formatStatus(value);
+}
+
+const clearCompletedCart = Boolean(order && (placed || paymentSuccess));
+---
+
+<Layout
+	title={order ? `${order.order_number} | TweakMart` : 'Order not found | TweakMart'}
+	description="View your TweakMart order confirmation and delivery details."
+	fullWidth={true}
+>
+	{
+		order ? (
+			<>
+				<OrderCompletion clearCompletedCart={clearCompletedCart} client:load />
+
+				<div class="min-h-screen bg-slate-50">
+					<div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+						<div class="mb-8">
+							<a
+								href="/"
+								class="text-sm font-semibold text-blue-600 transition hover:text-blue-700"
+							>
+								← Continue shopping
+							</a>
+						</div>
+
+						<section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+							<div class="border-b border-slate-200 px-5 py-7 sm:px-8 sm:py-9">
+								<div class="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+									<div>
+										<div class="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.12em] text-emerald-700">
+											Order received
+										</div>
+
+										<h1 class="mt-4 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+											Thank you, {order.customer_first_name}.
+										</h1>
+
+										<p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+											Your order has been received by TweakMart. Keep your order number handy for
+											future reference.
+										</p>
+									</div>
+
+									<div class="rounded-2xl bg-slate-50 px-5 py-4 sm:text-right">
+										<p class="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+											Order number
+										</p>
+
+										<p class="mt-1 text-lg font-black text-slate-950">{order.order_number}</p>
+
+										<p class="mt-1 text-xs text-slate-500">{formatDate(order.created_at)}</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="grid gap-0 lg:grid-cols-[minmax(0,1fr)_360px]">
+								<div class="p-5 sm:p-8">
+									<div class="grid gap-4 sm:grid-cols-3">
+										<div class="rounded-2xl border border-slate-200 p-4">
+											<p class="text-xs font-bold uppercase tracking-wide text-slate-500">
+												Order status
+											</p>
+
+											<p class="mt-2 text-sm font-bold text-slate-950">
+												{formatStatus(order.order_status)}
+											</p>
+										</div>
+
+										<div class="rounded-2xl border border-slate-200 p-4">
+											<p class="text-xs font-bold uppercase tracking-wide text-slate-500">
+												Payment
+											</p>
+
+											<p class="mt-2 text-sm font-bold text-slate-950">
+												{formatPaymentMethod(order.payment_method)}
+											</p>
+
+											<p class="mt-1 text-xs text-slate-500">
+												{formatStatus(order.payment_status)}
+											</p>
+										</div>
+
+										<div class="rounded-2xl border border-slate-200 p-4">
+											<p class="text-xs font-bold uppercase tracking-wide text-slate-500">Total</p>
+
+											<p class="mt-2 text-sm font-black text-slate-950">
+												{formatMoney(order.total, order.currency)}
+											</p>
+										</div>
+									</div>
+
+									<div class="mt-8">
+										<div class="border-b border-slate-200 pb-4">
+											<h2 class="text-lg font-bold text-slate-950">Order items</h2>
+
+											<p class="mt-1 text-sm text-slate-500">Items included in this order.</p>
+										</div>
+
+										<div class="divide-y divide-slate-200">
+											{order.items.map((item) => (
+												<div class="flex gap-5 py-5">
+													<div class="min-w-0 flex-1">
+														<p class="text-sm font-bold leading-5 text-slate-950">
+															{item.product_name}
+														</p>
+
+														{item.variant_name && (
+															<p class="mt-1 text-xs text-slate-500">{item.variant_name}</p>
+														)}
+
+														{item.sku && <p class="mt-1 text-xs text-slate-400">SKU: {item.sku}</p>}
+
+														<p class="mt-2 text-xs font-semibold text-slate-500">
+															Qty: {item.quantity} × {formatMoney(item.unit_price, order.currency)}
+														</p>
+													</div>
+
+													<p class="shrink-0 text-sm font-black text-slate-950">
+														{formatMoney(item.line_total, order.currency)}
+													</p>
+												</div>
+											))}
+										</div>
+									</div>
+								</div>
+
+								<aside class="border-t border-slate-200 bg-slate-50 p-5 sm:p-8 lg:border-l lg:border-t-0">
+									<div>
+										<p class="text-xs font-bold uppercase tracking-[0.14em] text-blue-600">
+											Delivery
+										</p>
+
+										<h2 class="mt-1 text-lg font-bold text-slate-950">Delivery details</h2>
+
+										<div class="mt-5 text-sm leading-6 text-slate-600">
+											<p class="font-bold text-slate-950">
+												{order.customer_first_name} {order.customer_last_name}
+											</p>
+
+											<p class="mt-2">{order.delivery_address}</p>
+
+											<p>
+												{order.delivery_city}, {order.delivery_state}
+											</p>
+
+											<p class="mt-3">{order.customer_phone}</p>
+
+											<p>{order.customer_email}</p>
+										</div>
+
+										{order.delivery_notes && (
+											<div class="mt-5 rounded-xl border border-slate-200 bg-white p-4">
+												<p class="text-xs font-bold uppercase tracking-wide text-slate-500">
+													Delivery notes
+												</p>
+
+												<p class="mt-2 text-sm leading-6 text-slate-600">{order.delivery_notes}</p>
+											</div>
+										)}
+									</div>
+
+									<div class="mt-8 border-t border-slate-200 pt-6">
+										<div class="space-y-3">
+											<div class="flex items-center justify-between gap-4 text-sm">
+												<span class="text-slate-600">Subtotal</span>
+
+												<span class="font-bold text-slate-950">
+													{formatMoney(order.subtotal, order.currency)}
+												</span>
+											</div>
+
+											<div class="flex items-center justify-between gap-4 text-sm">
+												<span class="text-slate-600">Delivery</span>
+
+												<span class="font-bold text-slate-950">
+													{order.delivery_fee === 0
+														? 'Free'
+														: formatMoney(order.delivery_fee, order.currency)}
+												</span>
+											</div>
+										</div>
+
+										<div class="mt-5 border-t border-slate-200 pt-5">
+											<div class="flex items-end justify-between gap-4">
+												<span class="text-sm font-bold text-slate-950">Total</span>
+
+												<span class="text-xl font-black tracking-tight text-slate-950">
+													{formatMoney(order.total, order.currency)}
+												</span>
+											</div>
+										</div>
+									</div>
+
+									{order.payment_method === 'pay_on_delivery' && (
+										<div class="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4">
+											<p class="text-sm font-bold text-amber-900">Pay on Delivery</p>
+
+											<p class="mt-1 text-xs leading-5 text-amber-800">
+												Payment will be collected when your order is delivered.
+											</p>
+										</div>
+									)}
+
+									{order.payment_status === 'paid' && (
+										<div class="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+											<p class="text-sm font-bold text-emerald-900">Payment confirmed</p>
+
+											<p class="mt-1 text-xs leading-5 text-emerald-800">
+												Your online payment has been successfully confirmed.
+											</p>
+										</div>
+									)}
+								</aside>
+							</div>
+						</section>
+
+						<div class="mt-8 text-center">
+							<a
+								href="/"
+								class="inline-flex h-12 items-center justify-center rounded-xl bg-slate-950 px-6 text-sm font-bold text-white shadow-lg shadow-slate-950/10 transition hover:bg-slate-800"
+							>
+								Continue shopping
+							</a>
+						</div>
+					</div>
+				</div>
+			</>
+		) : (
+			<div class="min-h-[60vh] bg-slate-50">
+				<div class="mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center">
+					<div class="flex size-14 items-center justify-center rounded-full bg-slate-200 text-xl font-black text-slate-700">
+						!
+					</div>
+
+					<h1 class="mt-5 text-2xl font-black text-slate-950">Order not found</h1>
+
+					<p class="mt-2 max-w-md text-sm leading-6 text-slate-600">
+						This order link is invalid or no longer available.
+					</p>
+
+					<a
+						href="/"
+						class="mt-7 inline-flex h-11 items-center justify-center rounded-xl bg-slate-950 px-5 text-sm font-bold text-white transition hover:bg-slate-800"
+					>
+						Return to TweakMart
+					</a>
+				</div>
+			</div>
+		)
+	}
+</Layout>

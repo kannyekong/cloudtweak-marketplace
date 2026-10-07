@@ -1,0 +1,13 @@
+---
+import Layout from "~/layouts/PrimaryLayout.astro";
+
+import CheckoutPage from "~/features/checkout/CheckoutPage.tsx";
+---
+
+<Layout
+	title="Checkout | TweakMart"
+	description="Complete your TweakMart order securely."
+	fullWidth={true}
+>
+	<CheckoutPage client:load />
+</Layout>

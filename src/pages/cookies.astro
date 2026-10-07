@@ -1,0 +1,156 @@
+---
+import { ShieldCheck } from 'lucide-astro';
+
+import Layout from '../layouts/PrimaryLayout.astro';
+---
+
+<Layout
+	title="Cookie Policy | TweakMart"
+	description="Learn how TweakMart uses cookies, browser storage and similar technologies."
+>
+	<section class="border-b border-slate-200">
+		<div class="mx-auto max-w-[1440px] py-7 sm:px-6 md:py-20 xl:px-8">
+			<div class="max-w-3xl">
+				<h1 class="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">Cookie Policy</h1>
+
+				<p class="mt-5 max-w-2xl text-base leading-8 text-slate-600">
+					This Cookie Policy explains how TweakMart may use cookies, browser storage and similar
+					technologies when you interact with our website.
+				</p>
+
+				<p class="mt-5 text-sm font-semibold text-slate-500">Effective date: 8 September 2026</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-white">
+		<div class="mx-auto max-w-4xl py-12 sm:px-6 md:py-16 xl:px-8">
+			<div class="space-y-12 text-[15px] leading-8 text-slate-600">
+				<section>
+					<h2 class="text-2xl font-black text-slate-950">1. What Are Cookies?</h2>
+
+					<p class="mt-4">
+						Cookies are small pieces of information that websites can store on your device. Websites
+						may also use technologies such as local storage and session storage to remember
+						information or support application functionality.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-2xl font-black text-slate-950">
+						2. How TweakMart Uses These Technologies
+					</h2>
+
+					<p class="mt-4">
+						TweakMart may use cookies or similar browser technologies where necessary to operate
+						website functionality, maintain sessions or preferences, support security, preserve
+						shopping functionality and improve the reliability of our services.
+					</p>
+				</section>
+
+				<!-- Cookie categories -->
+				<section>
+					<h2 class="text-2xl font-black text-slate-950">3. Categories</h2>
+
+					<div class="mt-6 overflow-hidden rounded-2xl border border-slate-200">
+						<div
+							class="grid gap-4 border-b border-slate-200 bg-slate-50 p-5 sm:grid-cols-[0.6fr_1.4fr]"
+						>
+							<div>
+								<div class="flex items-center gap-2">
+									<ShieldCheck class="size-4 text-blue-600" />
+									<p class="font-bold text-slate-950">Essential</p>
+								</div>
+
+								<span
+									class="mt-2 inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700"
+								>
+									Required
+								</span>
+							</div>
+
+							<p class="text-sm leading-7">
+								Technologies required for core website functionality, security, transactions and
+								features you request.
+							</p>
+						</div>
+
+						<div class="grid gap-4 border-b border-slate-200 p-5 sm:grid-cols-[0.6fr_1.4fr]">
+							<div>
+								<p class="font-bold text-slate-950">Functional</p>
+							</div>
+
+							<p class="text-sm leading-7">
+								Technologies that may remember preferences or information used to provide convenient
+								functionality.
+							</p>
+						</div>
+
+						<div class="grid gap-4 p-5 sm:grid-cols-[0.6fr_1.4fr]">
+							<div>
+								<p class="font-bold text-slate-950">Analytics</p>
+							</div>
+
+							<p class="text-sm leading-7">
+								Where implemented, analytics technologies may help us understand website usage,
+								performance and areas that can be improved.
+							</p>
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h2 class="text-2xl font-black text-slate-950">4. Local Storage</h2>
+
+					<p class="mt-4">
+						Some TweakMart functionality may use browser local storage rather than traditional
+						cookies. For example, shopping or saved-item functionality may store information on your
+						device so that it remains available between page visits.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-2xl font-black text-slate-950">5. Third-Party Technologies</h2>
+
+					<p class="mt-4">
+						Third-party services integrated with TweakMart may use their own cookies or similar
+						technologies where necessary to provide their services. Their use of such technologies
+						is governed by their respective policies.
+					</p>
+				</section>
+
+				<section>
+					<div class="flex items-center gap-3">
+						<h2 class="text-2xl font-black text-slate-950">6. Managing Cookies</h2>
+					</div>
+
+					<p class="mt-4">
+						Most browsers allow you to view, block or delete cookies and website data through
+						browser settings. Restricting essential storage may cause some TweakMart functionality
+						to stop working correctly.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-2xl font-black text-slate-950">7. Changes to This Policy</h2>
+
+					<p class="mt-4">
+						We may update this Cookie Policy as our website, technology or legal requirements
+						change. The effective date above identifies the current version.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-2xl font-black text-slate-950">8. Contact Us</h2>
+
+					<p class="mt-4">
+						Questions about our use of cookies or similar technologies can be submitted through our
+						<a href="/technical-support" class="font-bold text-blue-600 hover:text-blue-700">
+							contact page
+						</a>.
+					</p>
+				</section>
+			</div>
+		</div>
+	</section>
+</Layout>

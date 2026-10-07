@@ -1,0 +1,359 @@
+---
+import { ArrowRight, BadgePercent, CircleAlert, CircleCheck, Info, X } from 'lucide-astro';
+
+import { getActiveSiteNotifications } from '../../lib/tweakmart/site-notifications';
+import { tweakmartSupabase } from '../../lib/tweakmart/supabase-server';
+
+/*
+ * Loads administrator-created storefront notifications that are
+ * currently active and inside their configured scheduling window.
+ */
+const adminNotifications = await getActiveSiteNotifications();
+
+/*
+ * Uses the same active-deal validity window as the rest of the
+ * TweakMart storefront.
+ */
+const now = new Date().toISOString();
+
+const { count: activeDealCount, error: activeDealsError } = await tweakmartSupabase
+	.from('product_offers')
+	.select('id', {
+		count: 'exact',
+		head: true,
+	})
+	.eq('is_active', true)
+	.lte('starts_at', now)
+	.gt('ends_at', now);
+
+/*
+ * Prevents the optional deals notification from breaking the
+ * storefront if its query fails.
+ */
+if (activeDealsError) {
+	console.error('Unable to load active TweakMart deal count:', activeDealsError);
+}
+
+const dealCount = activeDealsError ? 0 : (activeDealCount ?? 0);
+const hasActiveDeals = dealCount > 0;
+
+/*
+ * Adds the automatic active-deals message to the same notification
+ * collection used by administrator-created storefront messages.
+ */
+const notifications = [
+	...adminNotifications,
+
+	...(hasActiveDeals
+		? [
+				{
+					id: 'tweakmart-active-deals',
+					title: 'Deals',
+					message:
+						dealCount === 1
+							? '1 limited-time offer is live.'
+							: `${dealCount} limited-time offers are live.`,
+					link_text: 'Shop deals',
+					link_url: '/deals',
+					notification_type: 'promotion' as const,
+					priority: 5,
+				},
+			]
+		: []),
+].sort((a, b) => b.priority - a.priority);
+
+const hasNotifications = notifications.length > 0;
+
+/*
+ * Returns the icon used to visually identify each notification type.
+ */
+function getNotificationIcon(type: string) {
+	switch (type) {
+		case 'success':
+			return CircleCheck;
+
+		case 'warning':
+			return CircleAlert;
+
+		case 'promotion':
+			return BadgePercent;
+
+		case 'info':
+		default:
+			return Info;
+	}
+}
+
+/*
+ * Returns the icon treatment for each notification type while keeping
+ * the overall ribbon design visually consistent.
+ */
+function getNotificationIconClass(type: string) {
+	switch (type) {
+		case 'success':
+			return 'bg-emerald-500/15 text-emerald-100';
+
+		case 'warning':
+			return 'bg-amber-400/20 text-amber-100';
+
+		case 'promotion':
+			return 'bg-pink-500 text-white';
+
+		case 'info':
+		default:
+			return 'bg-blue-500/20 text-blue-100';
+	}
+}
+---
+
+{
+	hasNotifications && (
+		<aside
+			id="site-notification-ribbon"
+			class="breakout relative overflow-hidden bg-blue-700 text-white"
+			aria-label="TweakMart notifications"
+		>
+			<div
+				class="pointer-events-none absolute -left-10 top-1/2 size-28 -translate-y-1/2 rounded-full bg-blue-500/20 blur-3xl"
+				aria-hidden="true"
+			/>
+
+			<div
+				class="pointer-events-none absolute -right-10 top-1/2 size-28 -translate-y-1/2 rounded-full bg-pink-500/20 blur-3xl"
+				aria-hidden="true"
+			/>
+
+			<div class="relative mx-auto flex min-h-12 max-w-[1440px] items-center px-4 pr-12 sm:px-6 sm:pr-14 xl:px-8">
+				<div class="relative h-12 min-w-0 flex-1 overflow-hidden">
+					{notifications.map((notification, index) => {
+						const NotificationIcon = getNotificationIcon(notification.notification_type);
+
+						return (
+							<div
+								class:list={[
+									'site-notification absolute inset-0 flex items-center justify-center',
+									index === 0 ? 'site-notification-current' : 'site-notification-hidden',
+								]}
+								data-notification-index={index}
+								aria-hidden={index === 0 ? 'false' : 'true'}
+							>
+								<div class="flex min-w-0 items-center justify-center gap-2.5 sm:gap-3">
+									<div
+										class:list={[
+											'hidden size-7 shrink-0 items-center justify-center rounded-full sm:flex',
+											getNotificationIconClass(notification.notification_type),
+										]}
+									>
+										<NotificationIcon class="size-3.5" aria-hidden="true" />
+									</div>
+
+									<p class="min-w-0 text-center text-xs font-medium leading-5 text-white/90 sm:text-sm">
+										<span class="font-bold text-white">{notification.title}</span>
+
+										<span class="mx-1.5 text-white/30" aria-hidden="true">
+											•
+										</span>
+
+										<span>{notification.message}</span>
+									</p>
+
+									{notification.link_url && notification.link_text && (
+										<a
+											href={notification.link_url}
+											class="group inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white px-1.5 md:px-3 py-1 text-[11px] font-bold text-[#000033] transition hover:bg-blue-50 sm:px-4 sm:text-xs"
+										>
+											<span>{notification.link_text}</span>
+
+											<ArrowRight
+												class="size-3.5 transition-transform group-hover:translate-x-0.5"
+												aria-hidden="true"
+											/>
+										</a>
+									)}
+								</div>
+							</div>
+						);
+					})}
+				</div>
+
+				<button
+					id="dismiss-site-notifications"
+					type="button"
+					class="absolute right-3 top-1/2 inline-flex size-8 -translate-y-1/2 items-center justify-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white sm:right-4"
+					aria-label="Dismiss notifications"
+					title="Dismiss"
+				>
+					<X class="size-4" aria-hidden="true" />
+				</button>
+			</div>
+		</aside>
+	)
+}
+
+<style>
+	.site-notification {
+		transition:
+			transform 420ms cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 420ms ease;
+		will-change: transform, opacity;
+	}
+
+	.site-notification-current {
+		opacity: 1;
+		transform: translateY(0);
+		pointer-events: auto;
+	}
+
+	.site-notification-hidden {
+		opacity: 0;
+		transform: translateY(100%);
+		pointer-events: none;
+	}
+
+	.site-notification-exit {
+		opacity: 0;
+		transform: translateY(-100%);
+		pointer-events: none;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.site-notification {
+			transition: none;
+		}
+	}
+</style>
+
+<script is:inline>
+	(() => {
+		/*
+		 * Initializes the notification ribbon and rotates through every
+		 * currently available storefront message.
+		 */
+		function initializeSiteNotificationRibbon() {
+			const ribbon = document.getElementById('site-notification-ribbon');
+
+			const dismissButton = document.getElementById('dismiss-site-notifications');
+
+			if (!ribbon || !dismissButton) {
+				return;
+			}
+
+			/*
+			 * Restores the ribbon whenever Astro loads or refreshes the
+			 * current page.
+			 */
+			ribbon.classList.remove('hidden');
+
+			const notifications = Array.from(ribbon.querySelectorAll('.site-notification'));
+
+			if (notifications.length === 0) {
+				return;
+			}
+
+			/*
+			 * Clears a previous rotation timer when Astro reinitializes
+			 * this preserved DOM element.
+			 */
+			const existingTimer = Number(ribbon.dataset.rotationTimer ?? 0);
+
+			if (existingTimer) {
+				window.clearInterval(existingTimer);
+			}
+
+			let currentIndex = 0;
+
+			/*
+			 * Resets every notification and displays the first message
+			 * whenever the ribbon is initialized.
+			 */
+			notifications.forEach((notification, index) => {
+				notification.classList.remove('site-notification-current', 'site-notification-exit');
+
+				notification.classList.add(
+					index === 0 ? 'site-notification-current' : 'site-notification-hidden',
+				);
+
+				notification.setAttribute('aria-hidden', index === 0 ? 'false' : 'true');
+			});
+
+			/*
+			 * Slides the current message through the top while bringing
+			 * the next notification into view from below.
+			 */
+			function showNextNotification() {
+				if (notifications.length <= 1) {
+					return;
+				}
+
+				const currentNotification = notifications[currentIndex];
+
+				const nextIndex = (currentIndex + 1) % notifications.length;
+
+				const nextNotification = notifications[nextIndex];
+
+				currentNotification.classList.remove('site-notification-current');
+
+				currentNotification.classList.add('site-notification-exit');
+
+				currentNotification.setAttribute('aria-hidden', 'true');
+
+				nextNotification.classList.remove('site-notification-hidden', 'site-notification-exit');
+
+				nextNotification.classList.add('site-notification-current');
+
+				nextNotification.setAttribute('aria-hidden', 'false');
+
+				/*
+				 * Returns the previous message below the viewport after
+				 * its upward exit animation has completed.
+				 */
+				window.setTimeout(() => {
+					currentNotification.classList.remove('site-notification-exit');
+
+					currentNotification.classList.add('site-notification-hidden');
+				}, 450);
+
+				currentIndex = nextIndex;
+			}
+
+			/*
+			 * Rotates notifications every five seconds only when more
+			 * than one storefront message is available.
+			 */
+			if (notifications.length > 1) {
+				const rotationTimer = window.setInterval(showNextNotification, 5000);
+
+				ribbon.dataset.rotationTimer = String(rotationTimer);
+			}
+
+			/*
+			 * Avoids attaching multiple dismissal handlers when Astro
+			 * initializes the same page more than once.
+			 */
+			if (dismissButton.dataset.dismissInitialized !== 'true') {
+				dismissButton.dataset.dismissInitialized = 'true';
+
+				dismissButton.addEventListener('click', () => {
+					const timer = Number(ribbon.dataset.rotationTimer ?? 0);
+
+					if (timer) {
+						window.clearInterval(timer);
+					}
+
+					ribbon.classList.add('hidden');
+				});
+			}
+		}
+
+		/*
+		 * Initializes the first server-rendered page.
+		 */
+		initializeSiteNotificationRibbon();
+
+		/*
+		 * Reinitializes the ribbon after Astro client-side navigation,
+		 * which also restores a ribbon dismissed on the previous view.
+		 */
+		document.addEventListener('astro:page-load', initializeSiteNotificationRibbon);
+	})();
+</script>

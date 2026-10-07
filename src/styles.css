@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	:focus {
+		outline: none;
+	}
+
+	:focus-visible {
+		@apply ring-2 ring-offset-2;
+	}
+
+	:focus-visible,
+	.focus-ring-dark :focus-visible {
+		@apply ring-theme-base-900 ring-offset-theme-base-100;
+	}
+
+	.focus-ring-light :focus-visible {
+		@apply ring-theme-base-100 ring-offset-theme-base-900;
+	}
+
+	.focus-ring-inset {
+		@apply ring-inset ring-offset-0;
+	}
+}
+
+:root {
+	--font-display: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+}
+
+p {
+	font-family: 'Montserrat', sans-serif;
+}
+
+body {
+	background-color: rgb(var(--color-bg));
+	font-family: var(--font-display);
+}
+
+h1,
+h2,
+h3 {
+	font-family: var(--font-display);
+}
+
+@layer components {
+	.content-grid,
+	.content-grid > .breakout {
+		& {
+			--content-width: theme('screens.2xl');
+			--side-padding: theme('space.4');
+			display: grid;
+			grid-auto-flow: row;
+			grid-template-columns:
+				[breakout-start]
+				minmax(var(--side-padding), 1fr)
+				[content-start content-left-start]
+				calc(min(100% / 3 - var(--side-padding), var(--content-width) / 3))
+				[content-left-end content-center-start]
+				calc(min(100% / 3 - var(--side-padding), var(--content-width) / 3))
+				[content-center-end content-right-start]
+				calc(min(100% / 3 - var(--side-padding), var(--content-width) / 3))
+				[content-right-end content-end]
+				minmax(var(--side-padding), 1fr)
+				[breakout-end];
+		}
+
+		& > * {
+			grid-column: content;
+		}
+
+		& > .breakout {
+			grid-column: breakout;
+		}
+
+		& > .content-left {
+			grid-column: content-left;
+		}
+
+		& > .content-center {
+			grid-column: content-center;
+			justify-self: center;
+		}
+
+		& > .content-right {
+			grid-column: content-right;
+			justify-self: end;
+		}
+	}
+}
+
+/* Fix compressed select fields in Safari while preserving native arrows. */
+select:not([multiple]) {
+	min-height: 40px;
+	height: 40px;
+	padding: 0 0.5rem;
+	line-height: normal;
+	border: 1px solid #cbd5e1;
+	background-color: #fff;
+	border-radius: 12px !important;
+	font-size: 12px;
+	-webkit-border-radius: 12px !important;
+}
+
+.notification-enter {
+	animation: notification-enter 400ms ease forwards;
+}
+
+.notification-exit {
+	animation: notification-exit 400ms ease forwards;
+}
+
+@keyframes notification-enter {
+	from {
+		opacity: 0;
+		transform: translateY(100%);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes notification-exit {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	to {
+		opacity: 0;
+		transform: translateY(-100%);
+	}
+}

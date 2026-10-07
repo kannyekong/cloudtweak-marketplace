@@ -1,0 +1,136 @@
+---
+import { Search } from 'lucide-astro';
+
+import Layout from '../layouts/PrimaryLayout.astro';
+import ProductCard from '~/components/storefront/ProductCard.astro';
+
+import { getStorefrontDeals } from '../lib/tweakmart/storefront-deals';
+
+const deals = await getStorefrontDeals({
+	sort: 'recommended',
+	limit: 100,
+});
+---
+
+<Layout
+	title="Deals & Offers | TweakMart"
+	description="Discover current TweakMart deals and limited-time offers across laptops, devices, accessories and technology products."
+>
+	<section class="relative overflow-hidden border-b border-slate-200">
+		<div
+			class="pointer-events-none absolute -right-32 -top-32 size-[420px] rounded-full"
+			aria-hidden="true"
+		>
+		</div>
+
+		<div
+			class="pointer-events-none absolute -bottom-40 left-1/4 size-[380px] rounded-full"
+			aria-hidden="true"
+		>
+		</div>
+
+		<div class="relative mx-auto max-w-[1440px] py-12 sm:px-6 md:py-16 lg:px-8">
+			<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-slate-400">
+				<a href="/" class="transition hover:text-white"> Home</a>
+
+				<span aria-hidden="true">/</span>
+
+				<span class="flex items-center gap-2 font-semibold text-slate-900">
+					Deals & Offers
+
+					{
+						deals.length > 0 && (
+							<span class="inline-flex min-w-5 items-center justify-center rounded-full bg-blue-600 px-1.5 py-0.5 text-[10px] font-bold leading-none text-white">
+								{deals.length}
+							</span>
+						)
+					}
+				</span>
+			</nav>
+
+			<div class="mt-10 max-w-3xl">
+				<h1 class="mt-5 text-3xl font-bold tracking-tight text-black sm:text-4xl md:text-5xl">
+					Better technology.
+					<span class="text-slate-400">
+						{' '}Better prices.
+					</span>
+				</h1>
+
+				<p class="mt-5 max-w-2xl text-sm leading-7 text-black sm:text-base">
+					Explore current offers across selected TweakMart products. Deals are applied automatically
+					while the promotion is active.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-white">
+		<div class="mx-auto max-w-[1440px] py-8 sm:px-6 md:py-10 lg:px-8">
+			{
+				deals.length > 0 ? (
+					<>
+						<div class="mb-6 flex items-end justify-between gap-5">
+							<div>
+								<p class="text-xs font-bold uppercase tracking-[0.16em] text-blue-600">
+									Current offers
+								</p>
+
+								<h2 class="mt-2 text-xl font-bold tracking-tight text-slate-950 sm:text-2xl">
+									Deals worth checking out
+								</h2>
+							</div>
+
+							<span class="hidden text-xs font-medium text-slate-500 sm:block">
+								Prices shown include active offers
+							</span>
+						</div>
+
+						<div class="deal-grid">
+							{deals.map((product) => (
+								<ProductCard {...product} />
+							))}
+						</div>
+					</>
+				) : (
+					<div class="flex min-h-[380px] flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50 px-6 text-center">
+						<div class="flex size-14 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ring-slate-200">
+							<Search class="size-5 text-slate-500" />
+						</div>
+
+						<h2 class="mt-5 text-lg font-bold text-slate-950">No active deals right now</h2>
+
+						<p class="mt-2 max-w-md text-sm leading-6 text-slate-500">
+							There are currently no promotional offers, but you can continue browsing products
+							available on TweakMart.
+						</p>
+
+						<a
+							href="/search"
+							class="mt-6 inline-flex min-h-11 items-center justify-center rounded-xl bg-blue-600 px-5 text-sm font-bold text-white transition hover:bg-blue-700"
+						>
+							Browse products
+						</a>
+					</div>
+				)
+			}
+		</div>
+	</section>
+</Layout>
+
+<style>
+	/* Displays two deal cards per row on mobile devices. */
+	.deal-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.75rem;
+		align-items: stretch;
+	}
+
+	/* Expands the deal grid for the user's practical MacBook/tablet breakpoint. */
+	@media (min-width: 768px) {
+		.deal-grid {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 1rem;
+		}
+	}
+</style>

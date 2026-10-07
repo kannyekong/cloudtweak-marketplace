@@ -1,0 +1,110 @@
+---
+import Layout from '~/layouts/PrimaryLayout.astro';
+import PaymentVerificationCleanup from '~/features/payment/PaymentVerificationCleanup.tsx';
+
+const reference = Astro.url.searchParams.get('reference');
+
+/* Produces a safe retry URL that verifies the existing transaction without starting another payment. */
+const retryVerificationUrl = reference
+	? `/api/checkout/paystack/callback?reference=${encodeURIComponent(reference)}`
+	: '/';
+---
+
+<Layout
+	title="Payment verification | TweakMart"
+	description="We are unable to confirm your TweakMart payment at the moment."
+	fullWidth={true}
+>
+	<PaymentVerificationCleanup client:load />
+
+	<div class="min-h-[70vh] bg-slate-50">
+		<div class="mx-auto flex max-w-4xl items-center justify-center px-4 py-16 sm:px-6 lg:py-24">
+			<div class="w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+				<div class="px-6 py-10 text-center sm:px-10 sm:py-14">
+					<div class="mx-auto flex size-16 items-center justify-center rounded-full bg-amber-100">
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="1.8"
+							class="size-8 text-amber-700"
+							aria-hidden="true"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"
+							></path>
+						</svg>
+					</div>
+
+					<p class="mt-6 text-xs font-bold uppercase tracking-[0.16em] text-amber-700">
+						Payment verification
+					</p>
+
+					<h1
+						class="mx-auto mt-3 max-w-2xl text-3xl font-black tracking-tight text-slate-950 sm:text-4xl"
+					>
+						We couldn't confirm your payment yet
+					</h1>
+
+					<p class="mx-auto mt-4 max-w-xl text-sm leading-6 text-slate-600 sm:text-base">
+						Your payment may already have been processed by Paystack, but TweakMart was unable to
+						confirm it successfully.
+					</p>
+
+					<div
+						class="mx-auto mt-8 max-w-xl rounded-2xl border border-amber-200 bg-amber-50 p-5 text-left"
+					>
+						<p class="text-sm font-bold text-amber-950">Please don't make another payment.</p>
+
+						<p class="mt-2 text-sm leading-6 text-amber-800">
+							We have retained your order information. You can safely retry payment verification
+							without being charged again.
+						</p>
+					</div>
+
+					{
+						reference && (
+							<div class="mx-auto mt-6 max-w-xl rounded-2xl border border-slate-200 bg-slate-50 p-5 text-left">
+								<p class="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">
+									Payment reference
+								</p>
+
+								<p class="mt-2 break-all font-mono text-sm font-semibold text-slate-950">
+									{reference}
+								</p>
+							</div>
+						)
+					}
+
+					<div
+						class="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
+					>
+						{
+							reference && (
+								<a
+									href={retryVerificationUrl}
+									class="inline-flex h-12 items-center justify-center rounded-xl bg-slate-950 px-6 text-sm font-bold text-white shadow-lg shadow-slate-950/10 transition hover:bg-slate-800"
+								>
+									Retry verification
+								</a>
+							)
+						}
+
+						<a
+							href="/"
+							class="inline-flex h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-6 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
+						>
+							Return to TweakMart
+						</a>
+					</div>
+
+					<p class="mx-auto mt-7 max-w-lg text-xs leading-5 text-slate-500">
+						Your shopping cart has been cleared to prevent an accidental duplicate order.
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>

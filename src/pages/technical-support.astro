@@ -1,0 +1,164 @@
+---
+import Layout from '../layouts/PrimaryLayout.astro';
+
+import TechnicalSupportForm from '../features/support/TechnicalSupportForm';
+import { CircleQuestionMark } from 'lucide-astro';
+import { FiChevronRight } from 'solid-icons/fi';
+---
+
+<Layout
+	title="Technical Support | TweakMart"
+	description="Get expert installation, configuration, deployment and technology support from CloudTweak."
+>
+	<section class="bg-white">
+		<div class="mx-auto max-w-[1440px] py-7 sm:px-6 md:py-20 xl:px-8">
+			<div>
+				<nav
+					class="mb-12 flex items-center gap-1.5 text-sm font-medium text-slate-500"
+					aria-label="Breadcrumb"
+				>
+					<a href="/" class="transition-colors hover:text-blue-600"> Home</a>
+
+					<FiChevronRight class="size-3.5 shrink-0 text-slate-300" aria-hidden="true" />
+
+					<span class="font-semibold text-blue-500"> Create a support request</span>
+				</nav>
+			</div>
+			<div class="grid gap-10 md:grid-cols-[0.75fr_1.25fr] md:items-start">
+				<div class="order-2 md:sticky md:top-8 md:order-1">
+					<div class="rounded-3xl border border-slate-200 bg-white p-5 sm:p-6">
+						<div class="flex items-start gap-4">
+							<div
+								class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-600"
+							>
+								<CircleQuestionMark class="size-5" />
+							</div>
+
+							<div>
+								<p class="text-xs font-bold uppercase tracking-[0.16em] text-blue-600">
+									After you submit
+								</p>
+
+								<h2 class="mt-1 text-xl font-black tracking-tight text-slate-950">
+									What happens next?
+								</h2>
+							</div>
+						</div>
+
+						<p class="mt-5 text-sm leading-6 text-slate-600">
+							Here&apos;s what to expect after you submit your technical support request.
+						</p>
+
+						<div class="mt-7">
+							<div class="relative flex gap-4 pb-7">
+								<div
+									class="absolute left-[19px] top-10 h-[calc(100%-1.5rem)] w-px bg-blue-200"
+									aria-hidden="true"
+								>
+								</div>
+
+								<div
+									class="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-black text-white"
+								>
+									1
+								</div>
+
+								<div class="min-w-0 pt-1">
+									<h3 class="text-sm font-bold text-slate-950">We receive your request</h3>
+
+									<p class="mt-1.5 text-sm leading-6 text-slate-500">
+										Your support requirements and environment details are securely submitted to our
+										technical team.
+									</p>
+								</div>
+							</div>
+
+							<div class="relative flex gap-4 pb-7">
+								<div
+									class="absolute left-[19px] top-10 h-[calc(100%-1.5rem)] w-px bg-blue-200"
+									aria-hidden="true"
+								>
+								</div>
+
+								<div
+									class="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-blue-200 bg-blue-50 text-sm font-black text-blue-600"
+								>
+									2
+								</div>
+
+								<div class="min-w-0 pt-1">
+									<h3 class="text-sm font-bold text-slate-950">We assess your requirements</h3>
+
+									<p class="mt-1.5 text-sm leading-6 text-slate-500">
+										We review the scope, environment and technical requirements to determine the
+										right approach.
+									</p>
+								</div>
+							</div>
+
+							<div class="relative flex gap-4 pb-7">
+								<div
+									class="absolute left-[19px] top-10 h-[calc(100%-1.5rem)] w-px bg-blue-200"
+									aria-hidden="true"
+								>
+								</div>
+
+								<div
+									class="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-blue-200 bg-blue-50 text-sm font-black text-blue-600"
+								>
+									3
+								</div>
+
+								<div class="min-w-0 pt-1">
+									<h3 class="text-sm font-bold text-slate-950">We contact you</h3>
+
+									<p class="mt-1.5 text-sm leading-6 text-slate-500">
+										Our team contacts you to confirm the scope, scheduling, access requirements and
+										any additional information needed.
+									</p>
+								</div>
+							</div>
+
+							<div class="relative flex gap-4">
+								<div
+									class="relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full border-2 border-blue-200 bg-blue-50 text-sm font-black text-blue-600"
+								>
+									4
+								</div>
+
+								<div class="min-w-0 pt-1">
+									<h3 class="text-sm font-bold text-slate-950">We schedule the support</h3>
+
+									<p class="mt-1.5 text-sm leading-6 text-slate-500">
+										Once the requirements are agreed, we coordinate the support session, deployment
+										or implementation with your organization.
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="mt-7 rounded-2xl bg-slate-50 p-4">
+							<p class="text-sm font-bold text-slate-950">Purchasing technology too?</p>
+
+							<p class="mt-1.5 text-xs leading-5 text-slate-500">
+								If your organization also needs to purchase products in quantity, you can submit a
+								separate bulk order request.
+							</p>
+
+							<a
+								href="/bulk-orders"
+								class="mt-3 inline-flex items-center text-xs font-bold text-blue-600 transition hover:text-blue-700"
+							>
+								Request a bulk order
+								<span class="ml-1" aria-hidden="true">→</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="order-1 md:order-2">
+					<TechnicalSupportForm client:load />
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>

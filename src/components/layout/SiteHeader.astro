@@ -1,0 +1,651 @@
+---
+import { CartDrawer } from '~/features/cart/CartDrawer.tsx';
+import { getStorefrontCategories } from '../../lib/tweakmart/storefront-categories';
+
+import {
+	Building2,
+	ChevronDown,
+	CircleHelp,
+	Gem,
+	Headphones,
+	Heart,
+	Layers3,
+	Handbag,
+	Menu,
+	Newspaper,
+	PackageSearch,
+	Phone,
+	Search,
+	ShoppingBag,
+	Tags,
+	UserRound,
+	X,
+} from 'lucide-astro';
+
+import type { HTMLAttributes } from 'astro/types';
+
+export interface Props extends HTMLAttributes<'header'> {}
+
+const { class: className, ...props } = Astro.props;
+
+const storefrontCategories = await getStorefrontCategories();
+
+/* Defines links shown in the primary desktop and mobile navigation. */
+/* Defines links shown in the primary desktop and mobile navigation. */
+const navigationItems = [
+	{
+		text: 'All Products',
+		href: '/products',
+		icon: Handbag,
+	},
+	{
+		text: 'Categories',
+		icon: Layers3,
+		children: storefrontCategories.map((category) => ({
+			text: category.name,
+			description: category.description ?? `Browse ${category.name} on TweakMart.`,
+			href: `/collections/${category.slug}`,
+			image_url: category.image_url,
+		})),
+	},
+	{
+		text: 'Deals',
+		href: '/deals',
+		badge: 'Offers',
+		icon: Gem,
+	},
+	{
+		text: 'Business',
+		icon: Building2,
+		children: [
+			{
+				text: 'Bulk Orders',
+				description: 'Purchase technology in volume for your organization.',
+				href: '/bulk-orders',
+				icon: 'orders',
+			},
+			{
+				text: 'Technical Support',
+				description: 'Get expert installation, configuration and deployment support.',
+				href: '/technical-support',
+				icon: 'business',
+			},
+		],
+	},
+	{
+		text: 'Brands',
+		href: '/brands',
+		icon: Tags,
+	},
+	{
+		text: 'Blog',
+		href: '/blog',
+		icon: Newspaper,
+	},
+];
+
+/* Determines whether a navigation destination matches the current page. */
+function isActivePath(href?: string) {
+	if (!href) {
+		return false;
+	}
+
+	const currentPath = Astro.url.pathname;
+
+	if (href === '/') {
+		return currentPath === '/';
+	}
+
+	return currentPath === href || currentPath.startsWith(`${href}/`);
+}
+---
+
+<header
+	class:list={[
+		'relative z-50 w-full border-theme-base-300 bg-white px-4 md:bg-[#000033]',
+		className,
+	]}
+	{...props}
+>
+	<!-- Utility navigation -->
+	<div class="hidden border-b border-slate-500 lg:block">
+		<div
+			class="mx-auto flex min-h-9 max-w-[1440px] items-center justify-between px-6 text-xs text-white xl:px-2"
+		>
+			<div class="flex items-center gap-5">
+				<a
+					href="tel:2348143099128"
+					class="flex items-center gap-1.5 transition hover:text-blue-500"
+				>
+					<Phone class="size-3.5" />
+					+2348143099128
+				</a>
+
+				<a href="/request-quote" class="flex items-center gap-1.5 transition hover:text-blue-500">
+					<Building2 class="size-3.5" />
+					Business Purchasing</a
+				>
+			</div>
+
+			<div class="flex items-center gap-5">
+				<a
+					href="/shipping-delivery"
+					class="flex items-center gap-1.5 transition hover:text-blue-500"
+				>
+					<PackageSearch class="size-3.5" />
+					Track Order
+				</a>
+
+				<a href="/help" class="flex items-center gap-1.5 transition hover:text-blue-500">
+					<CircleHelp class="size-3.5" />
+					Help & Support
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main commerce header -->
+	<div class="mx-auto max-w-[1440px] sm:px-6 md:px-0">
+		<div class="flex min-h-[76px] items-center gap-3 lg:gap-8">
+			<!-- Mobile menu -->
+			<button
+				type="button"
+				data-mobile-menu-trigger
+				aria-label="Open navigation"
+				aria-expanded="false"
+				class="flex size-10 shrink-0 items-center justify-center rounded-lg border border-theme-base-300 transition hover:bg-theme-base-100 md:text-white lg:hidden"
+			>
+				<Menu data-menu-open-icon class="size-5" />
+				<X data-menu-close-icon class="hidden size-5" />
+			</button>
+
+			<!-- Brand -->
+			<a href="/" class="transition hover:opacity-80" aria-label="TweakMart home">
+				<img src="/assets/tweakmartnew.png" alt="TweakMart" class="hidden w-72 md:block" />
+				<img src="/assets/tweakmartdark.png" alt="TweakMart" class="mx-auto w-48 md:hidden" />
+			</a>
+			<!-- Desktop search -->
+			<form
+				action="/search"
+				method="get"
+				role="search"
+				class="relative hidden min-w-0 flex-1 md:block"
+			>
+				<label for="global-search" class="sr-only"> Search products, brands, and categories</label>
+
+				<Search
+					class="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-theme-base-500"
+				/>
+
+				<input
+					id="global-search"
+					name="q"
+					type="search"
+					autocomplete="off"
+					placeholder="Search products, brands, software and categories..."
+					class="h-12 w-full rounded-xl border border-theme-base-300 bg-theme-base-100 pl-12 pr-24 text-sm text-theme-base-900 outline-none transition placeholder:text-theme-base-500 focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/10"
+				/>
+
+				<button
+					type="submit"
+					class="absolute right-1.5 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-pink-500 px-4 text-sm font-bold text-white transition hover:bg-blue-600"
+				>
+					Search
+				</button>
+			</form>
+
+			<!-- Account actions -->
+			<div class="ml-auto flex shrink-0 items-center gap-1 sm:gap-2">
+				<a
+					href="/saved-items"
+					aria-label="Saved products"
+					class="hidden size-11 items-center justify-center rounded-xl text-white transition hover:bg-theme-base-100 hover:text-blue-500 sm:flex"
+				>
+					<Heart class="size-5" />
+				</a>
+
+				<a
+					href="/account"
+					class="hidden min-h-11 items-center gap-2 rounded-xl px-2 transition hover:bg-blue-800 lg:flex"
+				>
+					<div
+						class="flex size-9 items-center justify-center rounded-full bg-theme-base-200 text-theme-base-800"
+					>
+						<UserRound class="size-4" />
+					</div>
+
+					<div class="leading-tight">
+						<span class="block text-[11px] text-white"> Welcome</span>
+
+						<span class="block text-sm font-bold text-white"> Sign in / Account</span>
+					</div>
+				</a>
+
+				<!-- Existing reactive cart remains untouched. -->
+				<div class="flex items-center">
+					<CartDrawer client:idle />
+				</div>
+			</div>
+		</div>
+
+		<!-- Mobile search -->
+		<form action="/search" method="get" role="search" class="relative pb-4 md:hidden">
+			<label for="mobile-global-search" class="sr-only">
+				Search products, brands, and categories</label
+			>
+
+			<Search
+				class="pointer-events-none absolute left-4 top-5 size-4 -translate-y-1/2 text-theme-base-500"
+			/>
+
+			<input
+				id="mobile-global-search"
+				name="q"
+				type="search"
+				autocomplete="off"
+				placeholder="Search products, brands, and categories"
+				class="h-10 w-full rounded-full border border-theme-base-300 bg-theme-base-100 pl-10 pr-4 text-sm outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-500/10"
+			/>
+		</form>
+	</div>
+
+	<!-- Desktop category navigation -->
+	<div class="hidden border-b border-slate-500 lg:block">
+		<nav
+			aria-label="Marketplace navigation"
+			class="mx-auto flex min-h-12 max-w-[1440px] items-center justify-center gap-1 px-6 xl:px-8"
+		>
+			{
+				navigationItems.map((item, index) => {
+					const Icon = item.icon;
+					const itemActive =
+						isActivePath(item.href) || item.children?.some((child) => isActivePath(child.href));
+
+					if (!item.children) {
+						return (
+							<a
+								href={item.href}
+								class:list={[
+									'relative flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-semibold transition',
+									itemActive
+										? 'bg-pink-500 text-white'
+										: 'text-white hover:bg-theme-base-100 hover:text-blue-500',
+								]}
+							>
+								<Icon class="size-4 shrink-0" />
+
+								<span>{item.text}</span>
+
+								{item.badge && (
+									<span class="rounded-full border bg-pink-500 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-white">
+										{item.badge}
+									</span>
+								)}
+							</a>
+						);
+					}
+
+					return (
+						<div class="group relative" data-desktop-nav-parent>
+							<button
+								type="button"
+								aria-expanded="false"
+								aria-controls={`desktop-menu-${index}`}
+								class:list={[
+									'flex h-9 items-center gap-1.5 rounded-lg px-3 text-sm font-semibold transition',
+									itemActive
+										? 'bg-pink-500 text-white'
+										: 'text-white hover:bg-theme-base-100 hover:text-blue-500',
+								]}
+							>
+								<Icon class="size-4 shrink-0" />
+
+								<span>{item.text}</span>
+
+								<ChevronDown class="size-3.5 transition-transform duration-200 group-hover:rotate-180" />
+							</button>
+
+							<div
+								id={`desktop-menu-${index}`}
+								class="invisible absolute left-0 top-full z-50 w-[440px] translate-y-2 pt-3 opacity-0 transition duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100"
+							>
+								<div class="rounded-2xl border border-theme-base-300 bg-white p-2 shadow-2xl shadow-black/10">
+									<div class="grid gap-1">
+										{item.children.map((child) => (
+											<a
+												href={child.href}
+												class="group/item flex items-start gap-4 rounded-xl p-3 transition hover:bg-theme-base-100"
+											>
+												<div class="flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-theme-base-200 bg-theme-base-100">
+													{item.text === 'Categories' ? (
+														'image_url' in child && child.image_url ? (
+															<img
+																src={child.image_url}
+																alt={child.text}
+																class="h-full w-full object-contain p-1.5 transition duration-200 group-hover/item:scale-105"
+																loading="lazy"
+															/>
+														) : (
+															<ShoppingBag class="size-5 text-blue-500" />
+														)
+													) : (
+														<>
+															{'icon' in child && child.icon === 'business' && (
+																<Building2 class="size-5 text-blue-500" />
+															)}
+
+															{'icon' in child && child.icon === 'quote' && (
+																<Headphones class="size-5 text-blue-500" />
+															)}
+
+															{'icon' in child && child.icon === 'orders' && (
+																<PackageSearch class="size-5 text-blue-500" />
+															)}
+														</>
+													)}
+												</div>
+
+												<div class="min-w-0">
+													<div class="text-sm font-bold text-theme-base-900 transition group-hover/item:text-blue-500">
+														{child.text}
+													</div>
+
+													<p class="mt-1 text-xs leading-5 text-theme-base-600">
+														{child.description}
+													</p>
+												</div>
+											</a>
+										))}
+									</div>
+
+									{item.text === 'Categories' && (
+										<div class="mt-2 border-t border-theme-base-300 p-2 pt-3">
+											<a
+												href="/collections"
+												class="flex items-center justify-between rounded-lg px-2 py-2 text-xs font-bold text-blue-500 transition hover:bg-blue-500/5"
+											>
+												Browse all categories
+												<span aria-hidden="true">→</span>
+											</a>
+										</div>
+									)}
+
+									{item.text === 'Business' && (
+										<div class="mt-2 border-t border-theme-base-300 p-2 pt-3">
+											<div class="rounded-xl bg-theme-base-100 p-4">
+												<div class="flex items-center gap-2">
+													<Building2 class="size-4 text-blue-500" />
+
+													<p class="text-xs font-bold text-theme-base-900">
+														Buying for your organization?
+													</p>
+												</div>
+
+												<p class="mt-1.5 text-xs leading-5 text-theme-base-600">
+													Let CloudTweak help source, configure and deliver your technology
+													requirements.
+												</p>
+
+												<a
+													href="/request-quote"
+													class="mt-3 inline-flex text-xs font-bold text-blue-500 hover:underline"
+												>
+													Request a business quote →
+												</a>
+											</div>
+										</div>
+									)}
+								</div>
+							</div>
+						</div>
+					);
+				})
+			}
+		</nav>
+	</div>
+
+	<!-- Mobile navigation -->
+	<div
+		data-mobile-menu
+		class="absolute inset-x-0 top-full hidden max-h-[calc(100vh-100px)] overflow-y-auto border-t border-theme-base-300 bg-white shadow-xl lg:hidden"
+	>
+		<nav aria-label="Mobile marketplace navigation" class="px-4 py-5 sm:px-6">
+			<div class="space-y-1">
+				<a
+					href="/products"
+					class="flex min-h-11 items-center rounded-xl px-3 text-sm font-bold text-theme-base-900 hover:bg-theme-base-100"
+				>
+					All Products
+				</a>
+
+				<details class="group">
+					<summary
+						class="flex min-h-11 cursor-pointer list-none items-center justify-between rounded-xl px-3 text-sm font-bold text-theme-base-900 hover:bg-theme-base-100"
+					>
+						Categories
+
+						<ChevronDown class="size-4 transition-transform group-open:rotate-180" />
+					</summary>
+
+					<div class="ml-3 space-y-1 border-l border-theme-base-300 py-2 pl-3">
+						{
+							navigationItems
+								.find((item) => item.text === 'Categories')
+								?.children?.map((child) => (
+									<a
+										href={child.href}
+										class="group flex items-center gap-3 rounded-xl px-2 py-2.5 transition hover:bg-theme-base-100"
+									>
+										<div class="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-theme-base-200 bg-theme-base-100">
+											{'image_url' in child && child.image_url ? (
+												<img
+													src={child.image_url}
+													alt={child.text}
+													class="h-full w-full object-contain p-1"
+													loading="lazy"
+												/>
+											) : (
+												<ShoppingBag class="size-4 text-blue-500" />
+											)}
+										</div>
+
+										<div class="min-w-0">
+											<span class="block truncate text-sm font-semibold text-theme-base-900 transition group-hover:text-blue-500">
+												{child.text}
+											</span>
+
+											<span class="mt-0.5 block truncate text-[11px] text-theme-base-500">
+												/collections/
+												{child.href.split('/').pop()}
+											</span>
+										</div>
+									</a>
+								))
+						}
+
+						<a
+							href="/collections"
+							class="mt-2 flex items-center justify-between rounded-lg px-3 py-2.5 text-xs font-bold text-blue-500 transition hover:bg-blue-500/5"
+						>
+							Browse all categories
+
+							<span aria-hidden="true">→</span>
+						</a>
+					</div>
+				</details>
+
+				<a
+					href="/deals"
+					class="flex min-h-11 items-center justify-between rounded-xl px-3 text-sm font-bold text-theme-base-900 hover:bg-theme-base-100"
+				>
+					<span>Deals & Offers</span>
+
+					<span
+						class="rounded-full bg-blue-500 px-2 py-0.5 text-[9px] font-bold uppercase text-white"
+					>
+						Offers
+					</span>
+				</a>
+
+				<details class="group">
+					<summary
+						class="flex min-h-11 cursor-pointer list-none items-center justify-between rounded-xl px-3 text-sm font-bold text-theme-base-900 hover:bg-theme-base-100"
+					>
+						Business
+
+						<ChevronDown class="size-4 transition-transform group-open:rotate-180" />
+					</summary>
+
+					<div class="ml-3 space-y-1 border-l border-theme-base-300 py-2 pl-3">
+						<a
+							href="/bulk-orders"
+							class="block rounded-lg px-3 py-2.5 text-sm text-theme-base-600 hover:bg-theme-base-100 hover:text-blue-500"
+						>
+							Bulk Orders
+						</a>
+
+						<a
+							href="/technical-support"
+							class="block rounded-lg px-3 py-2.5 text-sm text-theme-base-600 hover:bg-theme-base-100 hover:text-blue-500"
+						>
+							Technical Support
+						</a>
+					</div>
+				</details>
+
+				<a
+					href="/brands"
+					class="flex min-h-11 items-center rounded-xl px-3 text-sm font-bold text-theme-base-900 hover:bg-theme-base-100"
+				>
+					Brands
+				</a>
+			</div>
+
+			<div class="mt-5 grid grid-cols-2 gap-2 border-t border-theme-base-300 pt-5">
+				<a
+					href="/account"
+					class="flex items-center gap-2 rounded-xl bg-theme-base-100 p-3 text-xs font-bold text-theme-base-900"
+				>
+					<UserRound class="size-4 text-blue-500" />
+					My Account
+				</a>
+
+				<a
+					href="/saved-items"
+					class="flex items-center gap-2 rounded-xl bg-theme-base-100 p-3 text-xs font-bold text-theme-base-900"
+				>
+					<Heart class="size-4 text-blue-500" />
+					Saved Items
+				</a>
+
+				<a
+					href="/orders"
+					class="flex items-center gap-2 rounded-xl bg-theme-base-100 p-3 text-xs font-bold text-theme-base-900"
+				>
+					<PackageSearch class="size-4 text-blue-500" />
+					Track Order
+				</a>
+
+				<a
+					href="/help"
+					class="flex items-center gap-2 rounded-xl bg-theme-base-100 p-3 text-xs font-bold text-theme-base-900"
+				>
+					<Headphones class="size-4 text-blue-500" />
+					Get Help
+				</a>
+			</div>
+		</nav>
+	</div>
+</header>
+
+<script>
+	/** Focuses the global search field when the visitor is already on a search results route. */
+	function focusSearch() {
+		if (!window.location.pathname.startsWith('/search')) {
+			return;
+		}
+
+		const searchInput = document.querySelector<HTMLInputElement>('#global-search');
+
+		searchInput?.focus();
+	}
+
+	/** Initializes the responsive mobile marketplace navigation. */
+	function initializeMobileNavigation() {
+		const trigger = document.querySelector<HTMLButtonElement>('[data-mobile-menu-trigger]');
+
+		const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+
+		const openIcon = document.querySelector<HTMLElement>('[data-menu-open-icon]');
+
+		const closeIcon = document.querySelector<HTMLElement>('[data-menu-close-icon]');
+
+		if (!trigger || !menu) {
+			return;
+		}
+
+		/* Prevent duplicate listeners after Astro client-side navigation. */
+		if (trigger.dataset.initialized === 'true') {
+			return;
+		}
+
+		trigger.dataset.initialized = 'true';
+
+		/** Closes the mobile navigation and restores its default controls. */
+		function closeMobileMenu() {
+			menu?.classList.add('hidden');
+			trigger?.setAttribute('aria-expanded', 'false');
+			openIcon?.classList.remove('hidden');
+			closeIcon?.classList.add('hidden');
+			document.body.classList.remove('overflow-hidden');
+		}
+
+		/** Opens the mobile navigation. */
+		function openMobileMenu() {
+			menu?.classList.remove('hidden');
+			trigger?.setAttribute('aria-expanded', 'true');
+			openIcon?.classList.add('hidden');
+			closeIcon?.classList.remove('hidden');
+			document.body.classList.add('overflow-hidden');
+		}
+
+		trigger.addEventListener('click', () => {
+			const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+			if (isOpen) {
+				closeMobileMenu();
+				return;
+			}
+
+			openMobileMenu();
+		});
+
+		/* Close navigation after a mobile destination is selected. */
+		menu.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('click', closeMobileMenu);
+		});
+
+		/* Reset mobile navigation when moving back to desktop dimensions. */
+		window.addEventListener('resize', () => {
+			if (window.innerWidth >= 1024) {
+				closeMobileMenu();
+			}
+		});
+	}
+
+	/** Initializes all client-side behavior required by the site header. */
+	function initializeSiteHeader() {
+		focusSearch();
+		initializeMobileNavigation();
+	}
+
+	document.addEventListener('astro:page-load', initializeSiteHeader);
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initializeSiteHeader, {
+			once: true,
+		});
+	} else {
+		initializeSiteHeader();
+	}
+</script>

@@ -1,0 +1,324 @@
+---
+import { ArrowRight, Database, LockKeyhole, Mail, ShieldCheck } from 'lucide-astro';
+
+import Layout from '../layouts/PrimaryLayout.astro';
+
+const sections = [
+	{
+		id: 'information-we-collect',
+		title: '1. Information We Collect',
+	},
+	{
+		id: 'how-we-use-information',
+		title: '2. How We Use Your Information',
+	},
+	{
+		id: 'payments',
+		title: '3. Payments',
+	},
+	{
+		id: 'sharing',
+		title: '4. How We Share Information',
+	},
+	{
+		id: 'retention',
+		title: '5. Data Retention',
+	},
+	{
+		id: 'security',
+		title: '6. Data Security',
+	},
+	{
+		id: 'rights',
+		title: '7. Your Privacy Rights',
+	},
+	{
+		id: 'cookies',
+		title: '8. Cookies & Similar Technologies',
+	},
+	{
+		id: 'third-parties',
+		title: '9. Third-Party Services',
+	},
+	{
+		id: 'children',
+		title: '10. Children’s Privacy',
+	},
+	{
+		id: 'changes',
+		title: '11. Changes to This Policy',
+	},
+	{
+		id: 'contact',
+		title: '12. Contact Us',
+	},
+];
+---
+
+<Layout
+	title="Privacy Policy | TweakMart"
+	description="Learn how TweakMart collects, uses, protects and manages personal information."
+>
+	<!-- Minimal legal hero -->
+	<section class="border-b border-slate-200">
+		<div class="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 md:py-20 xl:px-8">
+			<div class="max-w-3xl">
+				<div
+					class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700"
+				>
+					<ShieldCheck class="size-4" />
+					Legal & Privacy
+				</div>
+
+				<h1 class="mt-5 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
+					Privacy Policy
+				</h1>
+
+				<p class="mt-5 max-w-2xl text-base leading-8 text-slate-600">
+					This Privacy Policy explains how TweakMart collects, uses, stores and protects personal
+					information when you use our website, purchase products, request services or otherwise
+					interact with us.
+				</p>
+
+				<p class="mt-5 text-sm font-semibold text-slate-500">Effective date: 8 September 2026</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-white">
+		<div
+			class="mx-auto grid max-w-[1440px] gap-10 px-4 py-12 sm:px-6 md:grid-cols-[0.7fr_1.3fr] md:items-start md:py-16 xl:px-8"
+		>
+			<!-- Navigation -->
+			<aside class="md:sticky md:top-8">
+				<div class="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+					<p class="text-xs font-bold uppercase tracking-wider text-slate-500">On this page</p>
+
+					<nav class="mt-4 space-y-1">
+						{
+							sections.map((section) => (
+								<a
+									href={`#${section.id}`}
+									class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-white hover:text-blue-600"
+								>
+									{section.title}
+								</a>
+							))
+						}
+					</nav>
+				</div>
+			</aside>
+
+			<!-- Policy -->
+			<article class="min-w-0">
+				<div class="mb-10 rounded-2xl border border-blue-100 bg-blue-50 p-5">
+					<div class="flex items-start gap-3">
+						<Database class="mt-0.5 size-5 shrink-0 text-blue-600" />
+
+						<p class="text-sm leading-7 text-slate-700">
+							TweakMart is a product of
+							<strong>CloudTweak Technologies Limited</strong>. References to “TweakMart”, “we”,
+							“us” or “our” in this Policy refer to TweakMart and, where applicable, CloudTweak
+							Technologies Limited as the operator of the service.
+						</p>
+					</div>
+				</div>
+
+				<div class="space-y-12 text-[15px] leading-8 text-slate-600">
+					<section id="information-we-collect" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">1. Information We Collect</h2>
+
+						<p class="mt-4">
+							We may collect information you provide directly to us when you create an account,
+							place an order, request a quotation, submit a bulk order request, request technical
+							support, contact us or otherwise interact with TweakMart.
+						</p>
+
+						<p class="mt-4">
+							This information may include your name, email address, telephone number, delivery
+							address, company or organization details, order information, support requests and
+							other information you choose to provide.
+						</p>
+
+						<p class="mt-4">
+							We may also collect technical information associated with your use of our website,
+							such as device and browser information, IP address, pages visited, referring pages and
+							information required for security, diagnostics and website operation.
+						</p>
+					</section>
+
+					<section id="how-we-use-information" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">2. How We Use Your Information</h2>
+
+						<p class="mt-4">
+							We may use personal information to process and fulfil orders, provide requested
+							products and services, communicate about transactions, respond to enquiries, prepare
+							quotations, coordinate deliveries and provide technical support.
+						</p>
+
+						<p class="mt-4">
+							We may also use information to operate, secure and improve TweakMart, prevent fraud
+							and abuse, maintain business and transaction records, comply with applicable legal
+							obligations and protect the rights and interests of TweakMart, CloudTweak, our
+							customers and other users.
+						</p>
+					</section>
+
+					<section id="payments" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">3. Payments</h2>
+
+						<p class="mt-4">
+							Payments made through TweakMart may be processed through third-party payment providers
+							such as Paystack. Payment providers may collect and process payment information in
+							accordance with their own terms and privacy policies.
+						</p>
+
+						<p class="mt-4">
+							TweakMart does not need to store your complete payment-card details in order to
+							confirm and manage a transaction. We may retain payment references, transaction
+							status, amounts and related information necessary for accounting, order management,
+							reconciliation and support.
+						</p>
+					</section>
+
+					<section id="sharing" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">4. How We Share Information</h2>
+
+						<p class="mt-4">
+							We may share information where reasonably necessary to operate TweakMart and fulfil
+							your requests. This may include payment processors, logistics and delivery providers,
+							technology infrastructure providers, suppliers, professional advisers and service
+							providers acting on our behalf.
+						</p>
+
+						<p class="mt-4">
+							For example, information necessary to complete a delivery may be provided to an
+							assigned logistics provider.
+						</p>
+
+						<p class="mt-4">
+							We may also disclose information where required by law, regulation, legal process or a
+							lawful request from a competent authority, or where reasonably necessary to prevent
+							fraud, protect security or defend legal rights.
+						</p>
+					</section>
+
+					<section id="retention" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">5. Data Retention</h2>
+
+						<p class="mt-4">
+							We retain personal information for as long as reasonably necessary for the purposes
+							for which it was collected, including providing services, maintaining transaction and
+							accounting records, resolving disputes, enforcing agreements and complying with legal
+							obligations.
+						</p>
+					</section>
+
+					<section id="security" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">6. Data Security</h2>
+
+						<p class="mt-4">
+							We use reasonable administrative, technical and organizational measures designed to
+							protect information against unauthorized access, disclosure, alteration, loss or
+							misuse.
+						</p>
+
+						<div
+							class="mt-5 flex items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-5"
+						>
+							<LockKeyhole class="mt-0.5 size-5 shrink-0 text-blue-600" />
+
+							<p class="text-sm leading-7">
+								No internet-based service or storage system can guarantee absolute security. Users
+								should also take appropriate precautions to protect their account credentials and
+								devices.
+							</p>
+						</div>
+					</section>
+
+					<section id="rights" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">7. Your Privacy Rights</h2>
+
+						<p class="mt-4">
+							Subject to applicable law, you may have rights concerning your personal information,
+							including rights to request access, correction, deletion or restriction of certain
+							processing, and to object to or withdraw consent from certain processing where
+							applicable.
+						</p>
+
+						<p class="mt-4">
+							Some information may need to be retained where required for legal, regulatory,
+							security, accounting, fraud-prevention or legitimate business purposes.
+						</p>
+					</section>
+
+					<section id="cookies" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">8. Cookies & Similar Technologies</h2>
+
+						<p class="mt-4">
+							TweakMart may use cookies, browser storage and similar technologies to operate website
+							features, maintain preferences, support shopping functionality, improve security and
+							understand website performance.
+						</p>
+
+						<p class="mt-4">
+							Additional information is available in our
+							<a href="/cookies" class="font-bold text-blue-600 hover:text-blue-700">
+								Cookie Policy
+							</a>.
+						</p>
+					</section>
+
+					<section id="third-parties" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">9. Third-Party Services</h2>
+
+						<p class="mt-4">
+							TweakMart may contain links to or integrate with third-party services. Their
+							processing practices are governed by their respective policies and are not controlled
+							by this Privacy Policy.
+						</p>
+					</section>
+
+					<section id="children" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">10. Children’s Privacy</h2>
+
+						<p class="mt-4">
+							TweakMart is a general technology commerce service and is not designed specifically
+							for children. If we become aware that personal information has been collected in
+							circumstances that require parental or guardian authorization under applicable law, we
+							may take appropriate steps to address the matter.
+						</p>
+					</section>
+
+					<section id="changes" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">11. Changes to This Policy</h2>
+
+						<p class="mt-4">
+							We may update this Privacy Policy as our services, practices or legal requirements
+							change. The effective date displayed at the top of this page indicates when the
+							current version became effective.
+						</p>
+					</section>
+
+					<section id="contact" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">12. Contact Us</h2>
+
+						<p class="mt-4">
+							Questions or requests relating to this Privacy Policy or your personal information can
+							be submitted through TweakMart support.
+						</p>
+
+						<a
+							href="/technical-support"
+							class="mt-5 inline-flex items-center gap-2 font-bold text-blue-600 transition hover:text-blue-700"
+						>
+							<Mail class="size-4" />
+							Contact us
+							<ArrowRight class="size-4" />
+						</a>
+					</section>
+				</div>
+			</article>
+		</div>
+	</section>
+</Layout>

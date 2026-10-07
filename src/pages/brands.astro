@@ -1,0 +1,165 @@
+---
+import { ArrowRight, Search } from 'lucide-astro';
+
+import Layout from '../layouts/PrimaryLayout.astro';
+import { getStorefrontBrands } from '../lib/tweakmart/storefront-brands';
+
+const brands = await getStorefrontBrands();
+---
+
+<Layout
+	title="Brands | TweakMart"
+	description="Browse technology brands available on TweakMart and discover products from the manufacturers you know."
+>
+	<section class="border-b border-slate-200 bg-white">
+		<div class="mx-auto max-w-[1440px] py-10 sm:px-6 md:py-14 lg:px-8">
+			<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-slate-500">
+				<a href="/" class="transition hover:text-blue-600"> Home</a>
+
+				<span aria-hidden="true">/</span>
+
+				<span class="flex items-center gap-2 font-semibold text-slate-900">
+					Brands
+
+					{
+						brands.length > 0 && (
+							<span class="inline-flex min-w-5 items-center justify-center rounded-full bg-blue-600 px-1.5 py-0.5 text-[10px] font-bold leading-none text-white">
+								{brands.length}
+							</span>
+						)
+					}
+				</span>
+			</nav>
+
+			<div class="mt-8 max-w-3xl">
+				<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">Shop by brand</p>
+
+				<h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+					Technology from brands
+					<span class="text-slate-400">
+						{' '}you know.
+					</span>
+				</h1>
+
+				<p class="mt-5 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
+					Browse the brands available on TweakMart and quickly find products from the manufacturers
+					you're looking for.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-white">
+		<div class="mx-auto max-w-[1440px] py-5 sm:px-6 md:py-7 lg:px-8">
+			{
+				brands.length > 0 ? (
+					<div class="brand-grid mt-4">
+						{brands.map((brand) => {
+							const brandSearchUrl = `/search?q=${encodeURIComponent(brand.slug)}`;
+
+							const brandInitial = brand.name.trim().charAt(0).toUpperCase();
+
+							return (
+								<a
+									href={brandSearchUrl}
+									aria-label={`Shop ${brand.name} products`}
+									class="brand-card group min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white transition duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-lg"
+								>
+									<div class="brand-logo flex min-w-0 items-center justify-center overflow-hidden border-b border-slate-100 bg-white p-5 sm:p-7">
+										{brand.logo_url ? (
+											<img
+												src={brand.logo_url}
+												alt={`${brand.name} logo`}
+												loading="lazy"
+												class="block max-h-full max-w-full object-contain transition duration-300 group-hover:scale-105"
+											/>
+										) : (
+											<div class="flex size-16 items-center justify-center rounded-2xl bg-slate-100 text-2xl font-bold text-slate-500 sm:size-20 sm:text-3xl">
+												{brandInitial}
+											</div>
+										)}
+									</div>
+
+									<div class="brand-footer flex min-w-0 items-center justify-between gap-3 px-4 py-4 sm:px-5">
+										<div class="min-w-0">
+											<p class="truncate text-sm font-bold text-slate-950 sm:text-base">
+												{brand.name}
+											</p>
+
+											<p class="mt-0.5 text-xs text-slate-500 sm:text-sm">View products</p>
+										</div>
+
+										<span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-500 transition group-hover:bg-blue-600 group-hover:text-white sm:size-9">
+											<ArrowRight class="size-3.5 transition-transform group-hover:translate-x-0.5" />
+										</span>
+									</div>
+								</a>
+							);
+						})}
+					</div>
+				) : (
+					<div class="mt-8 flex min-h-[320px] flex-col items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-white px-6 text-center">
+						<div class="flex size-12 items-center justify-center rounded-2xl bg-slate-100">
+							<Search class="size-5 text-slate-500" />
+						</div>
+
+						<h2 class="mt-5 text-lg font-bold text-slate-950">No brands available</h2>
+
+						<p class="mt-2 max-w-md text-sm leading-6 text-slate-500">
+							Brands will appear here as they become available on TweakMart.
+						</p>
+					</div>
+				)
+			}
+		</div>
+	</section>
+</Layout>
+
+<style>
+	/* Displays two brand cards per row on mobile and four from the tablet breakpoint upward. */
+	.brand-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.75rem;
+		align-items: stretch;
+	}
+
+	/* Gives every brand card identical logo and footer rows regardless of the source logo dimensions. */
+	.brand-card {
+		display: grid;
+		grid-template-rows: 10rem 5.25rem;
+		min-width: 0;
+		height: 100%;
+	}
+
+	/* Prevents oversized or oddly proportioned brand logos from changing the card dimensions. */
+	.brand-logo {
+		min-width: 0;
+		min-height: 0;
+	}
+
+	/* Keeps the footer locked to the second fixed card row. */
+	.brand-footer {
+		min-width: 0;
+		min-height: 0;
+	}
+
+	/* Expands the logo region slightly on larger mobile and tablet screens. */
+	@media (min-width: 640px) {
+		.brand-card {
+			grid-template-rows: 12rem 5.5rem;
+		}
+	}
+
+	/* Displays four brand cards per row on tablets and desktop screens. */
+	@media (min-width: 768px) {
+		.brand-grid {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 1rem;
+		}
+
+		.brand-card {
+			grid-template-rows: 13rem 5.5rem;
+		}
+	}
+</style>

@@ -1,0 +1,304 @@
+---
+import type { StorefrontProduct } from '../../lib/tweakmart/storefront-products';
+import { getProductEffectivePrice, getProductOfferPercentage } from '../../lib/tweakmart/pricing';
+
+import WishlistButton from '../../features/wishlist/WishlistButton';
+
+type Props = StorefrontProduct & {
+	class?: string;
+	imageLoading?: 'eager' | 'lazy';
+};
+
+const {
+	id,
+	name,
+	slug,
+	short_description,
+	product_type,
+	condition,
+	base_price,
+	compare_at_price,
+	currency,
+	featured,
+	active_offer,
+	category,
+	brand,
+	primary_image,
+	inventory,
+	class: className = '',
+	imageLoading = 'lazy',
+} = Astro.props;
+
+/* Builds the complete product object required by the shared pricing helpers. */
+const product = Astro.props as StorefrontProduct;
+
+/* Formats product prices using the product currency with Nigerian locale formatting. */
+function formatPrice(value: number) {
+	return new Intl.NumberFormat('en-NG', {
+		style: 'currency',
+		currency: currency || 'NGN',
+		maximumFractionDigits: 0,
+	}).format(value);
+}
+
+/* Resolves the actual storefront selling price, including a currently active deal. */
+const effectivePrice = getProductEffectivePrice(product);
+
+/* Determines whether the product currently has an active deal. */
+const hasActiveOffer = active_offer !== null && active_offer.offer_price < base_price;
+
+/* Calculates the percentage saved by the active deal. */
+const offerPercentage = getProductOfferPercentage(product);
+
+/*
+ * Preserves the existing compare-at-price discount when the product does not
+ * currently have a temporary promotional offer.
+ */
+const hasStandardDiscount =
+	!hasActiveOffer && compare_at_price !== null && compare_at_price > base_price;
+
+/* Calculates the existing compare-at-price percentage when no active deal exists. */
+const standardDiscountPercentage =
+	hasStandardDiscount && compare_at_price
+		? Math.round(((compare_at_price - base_price) / compare_at_price) * 100)
+		: null;
+
+/*
+ * Determines the reference price shown with a strikethrough.
+ * Active offers compare against the regular base price, while ordinary
+ * discounts continue to compare against compare_at_price.
+ */
+const referencePrice = hasActiveOffer ? base_price : hasStandardDiscount ? compare_at_price : null;
+
+const formattedPrice = formatPrice(effectivePrice);
+
+const formattedReferencePrice = referencePrice !== null ? formatPrice(referencePrice) : null;
+
+/* Resolves the percentage shown by the product discount badge. */
+const displayedDiscountPercentage = hasActiveOffer ? offerPercentage : standardDiscountPercentage;
+
+/* Creates a concise product classification label for the card metadata. */
+const productTypeLabel =
+	product_type === 'digital'
+		? 'Digital'
+		: product_type === 'service'
+			? 'Service'
+			: condition === 'new'
+				? 'Brand new'
+				: condition;
+
+/* Combines the product card styles with any classes supplied by its parent layout. */
+const cardClass = [
+	'group relative flex h-full flex-col overflow-hidden rounded-[1.4rem] border border-slate-200 bg-white transition duration-200 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl',
+	className,
+]
+	.filter(Boolean)
+	.join(' ');
+---
+
+<article class={cardClass}>
+	<a href={`/products/${slug}`} class="flex h-full flex-col" aria-label={`View ${name}`}>
+		<div class="relative m-2.5 mb-0 overflow-hidden rounded-[1.05rem] bg-slate-100">
+			<div class="relative aspect-[4/3] overflow-hidden">
+				{
+					primary_image ? (
+						<img
+							src={primary_image.image_url}
+							alt={primary_image.alt_text ?? name}
+							loading={imageLoading}
+							class="h-full w-full object-contain p-5 transition duration-300 group-hover:scale-105"
+						/>
+					) : (
+						<div class="flex h-full w-full items-center justify-center p-8">
+							<div class="flex flex-col items-center text-center">
+								<svg
+									viewBox="0 0 24 24"
+									fill="none"
+									aria-hidden="true"
+									class="h-8 w-8 text-slate-300"
+								>
+									<path
+										d="M4 7.75A2.75 2.75 0 0 1 6.75 5h10.5A2.75 2.75 0 0 1 20 7.75v8.5A2.75 2.75 0 0 1 17.25 19H6.75A2.75 2.75 0 0 1 4 16.25v-8.5Z"
+										stroke="currentColor"
+										stroke-width="1.5"
+									/>
+									<path
+										d="m5 16 4.2-4.2a1.5 1.5 0 0 1 2.12 0L13 13.48l1.18-1.18a1.5 1.5 0 0 1 2.12 0L20 16"
+										stroke="currentColor"
+										stroke-width="1.5"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+									<circle cx="15.5" cy="8.5" r="1.25" fill="currentColor" />
+								</svg>
+
+								<span class="mt-2 text-[11px] font-medium text-slate-400">
+									Image coming soon
+								</span>
+							</div>
+						</div>
+					)
+				}
+			</div>
+
+			<div
+				class="pointer-events-none absolute inset-x-3 top-3 flex items-start justify-between gap-2"
+			>
+				<div class="flex flex-wrap gap-1.5">
+					{
+						featured && (
+							<span class="rounded-full border border-white/70 bg-white/90 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em] text-slate-800 shadow-sm backdrop-blur-md">
+								Featured
+							</span>
+						)
+					}
+
+					{
+						hasActiveOffer && (
+							<span class="rounded-full bg-rose-600 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.1em] text-white shadow-sm">
+								Deal
+							</span>
+						)
+					}
+				</div>
+
+				{
+					!inventory.in_stock && (
+						<span class="mr-10 shrink-0 rounded-full bg-slate-950/85 px-2.5 py-1 text-[9px] font-bold text-white backdrop-blur-md">
+							Sold out
+						</span>
+					)
+				}
+			</div>
+		</div>
+
+		<div class="flex flex-1 flex-col px-4 pb-4 pt-4">
+			<div
+				class="flex min-h-4 items-center gap-1.5 overflow-hidden text-[10px] font-semibold uppercase tracking-[0.11em] text-slate-400"
+			>
+				{brand && <span class="truncate text-slate-500">{brand.name}</span>}
+
+				{
+					brand && category && (
+						<span class="h-1 w-1 shrink-0 rounded-full bg-slate-300" />
+					)
+				}
+
+				{category && <span class="truncate">{category.name}</span>}
+			</div>
+
+			<h3
+				class="mt-2.5 line-clamp-2 min-h-11 text-[15px] font-semibold leading-[1.4] tracking-[-0.01em] text-slate-950 transition duration-200 group-hover:text-blue-600"
+			>
+				{name}
+			</h3>
+
+			{
+				short_description && (
+					<p class="mt-1.5 line-clamp-2 min-h-9 text-xs leading-[1.55] text-slate-500">
+						{short_description}
+					</p>
+				)
+			}
+
+			<div class="mt-auto pt-5">
+				<div class="flex items-end justify-between gap-3">
+					<div class="min-w-0">
+						{
+							formattedReferencePrice && (
+								<div class="mb-0.5 text-[11px] font-medium text-slate-400 line-through">
+									{formattedReferencePrice}
+								</div>
+							)
+						}
+
+						<div
+							class:list={[
+								'text-[17px] font-bold tracking-[-0.025em]',
+								hasActiveOffer ? 'text-rose-600' : 'text-slate-950',
+							]}
+						>
+							{formattedPrice}{
+								displayedDiscountPercentage !== null && (
+									<span class="bg-primary px-2.5 py-1 text-[12px] font-bold tracking-wide text-green-500">
+										Save {displayedDiscountPercentage}%
+									</span>
+								)
+							}
+						</div>
+
+						{
+							hasActiveOffer && active_offer.title && (
+								<div class="mt-1 max-w-[160px] truncate text-[10px] font-semibold text-rose-500">
+									{active_offer.title}
+								</div>
+							)
+						}
+					</div>
+
+					<div
+						class="flex size-9 shrink-0 items-center justify-center rounded-full bg-blue-500 text-white transition duration-300 group-hover:bg-blue-600 group-hover:text-white"
+					>
+						<svg
+							viewBox="0 0 24 24"
+							fill="none"
+							aria-hidden="true"
+							class="h-4 w-4 transition-transform duration-300"
+						>
+							<path
+								d="M5 12h14M13 6l6 6-6 6"
+								stroke="currentColor"
+								stroke-width="1.8"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+							</path>
+						</svg>
+					</div>
+				</div>
+
+				<div class="mt-3 flex items-center justify-between gap-3 border-t border-slate-100 pt-3">
+					<div class="flex min-w-0 items-center gap-1.5">
+						<span
+							class:list={[
+								'h-1.5 w-1.5 shrink-0 rounded-full',
+								inventory.in_stock ? 'bg-emerald-500' : 'bg-rose-500',
+							]}
+						>
+						</span>
+
+						<span
+							class:list={[
+								'truncate text-[10px] font-semibold',
+								inventory.in_stock
+									? 'text-emerald-600'
+									: 'text-rose-600',
+							]}
+						>
+							{inventory.in_stock ? 'Available' : 'Currently unavailable'}
+						</span>
+					</div>
+
+					<span
+						class="shrink-0 text-[9px] font-semibold uppercase tracking-[0.1em] text-slate-400"
+					>
+						{productTypeLabel}
+					</span>
+				</div>
+			</div>
+		</div>
+	</a>
+
+	<div class="absolute right-[22px] top-[22px] z-20">
+		<WishlistButton
+			client:load
+			productId={id}
+			slug={slug}
+			name={name}
+			price={effectivePrice}
+			imageUrl={primary_image?.image_url ?? null}
+			brandName={brand?.name ?? null}
+			class="flex size-8 items-center justify-center rounded-full border border-white/70 bg-white/90 shadow-sm backdrop-blur-md hover:bg-white"
+		/>
+	</div>
+</article>

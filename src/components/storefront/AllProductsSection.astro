@@ -1,0 +1,58 @@
+---
+import { ArrowRight } from 'lucide-astro';
+
+import ProductCard from './ProductCard.astro';
+
+import { getStorefrontProducts } from '~/lib/tweakmart/storefront-products.ts';
+
+/* Loads a limited storefront selection while keeping the homepage lightweight. */
+const products = await getStorefrontProducts({
+	sort: 'recommended',
+	limit: 8,
+});
+---
+
+{
+	products.length > 0 && (
+		<section class="border-y border-slate-200 bg-white py-8 sm:py-10 lg:py-12">
+			<div class="mx-auto max-w-[1440px] sm:px-6 lg:px-8">
+				<div class="mb-6 flex items-end justify-between gap-5 sm:mb-8">
+					<div>
+						<h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+							Explore our products
+						</h2>
+
+						<p class="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+							Discover technology, software, devices and solutions selected for modern businesses
+							and professionals.
+						</p>
+					</div>
+
+					<a
+						href="/products"
+						class="hidden shrink-0 items-center gap-2 text-sm font-bold text-blue-600 transition hover:text-blue-700 sm:flex"
+					>
+						See all products
+						<ArrowRight class="size-4" />
+					</a>
+				</div>
+
+				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+					{products.map((product) => (
+						<ProductCard {...product} class="min-w-0" />
+					))}
+				</div>
+
+				<div class="mt-7 sm:hidden">
+					<a
+						href="/products"
+						class="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-800 transition hover:border-blue-200 hover:text-blue-600"
+					>
+						See all products
+						<ArrowRight class="size-4" />
+					</a>
+				</div>
+			</div>
+		</section>
+	)
+}

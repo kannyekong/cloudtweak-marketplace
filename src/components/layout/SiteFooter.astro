@@ -1,0 +1,370 @@
+---
+import { Icon } from 'astro-icon/components';
+
+import { BadgeCheck, Headphones, Mail, MapPin, Phone, ShieldCheck, Truck } from 'lucide-astro';
+
+import ExternalLink from '~/components/ui/ExternalLink.astro';
+
+import { getStorefrontCategories } from '../../lib/tweakmart/storefront-categories';
+
+export interface Props {
+	class?: string;
+}
+
+/* Loads the same storefront-visible categories used by the main navigation. */
+const storefrontCategories = await getStorefrontCategories();
+---
+
+<footer class:list={['mt-5 border-t border-theme-base-300 bg-blue-50 px-6', Astro.props.class]}>
+	<section class="border-b border-theme-base-300">
+		<div class="grid gap-6 py-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8 lg:py-8">
+			<div class="flex items-center gap-3">
+				<div class="flex size-11 shrink-0 items-center justify-center rounded-full bg-blue-500/10">
+					<Truck class="size-5 text-blue-500" />
+				</div>
+
+				<div>
+					<p class="text-sm font-bold text-theme-base-900">Reliable Delivery</p>
+
+					<p class="mt-1 text-xs leading-5 text-theme-base-600">
+						Fast and dependable delivery across Nigeria.
+					</p>
+				</div>
+			</div>
+
+			<div class="flex items-center gap-3">
+				<div class="flex size-11 shrink-0 items-center justify-center rounded-full bg-blue-500/10">
+					<ShieldCheck class="size-5 text-blue-500" />
+				</div>
+
+				<div>
+					<p class="text-sm font-bold text-theme-base-900">Secure Payments</p>
+
+					<p class="mt-1 text-xs leading-5 text-theme-base-600">
+						Your transactions are protected and secure.
+					</p>
+				</div>
+			</div>
+
+			<div class="flex items-center gap-3">
+				<div class="flex size-11 shrink-0 items-center justify-center rounded-full bg-blue-500/10">
+					<BadgeCheck class="size-5 text-blue-500" />
+				</div>
+
+				<div>
+					<p class="text-sm font-bold text-theme-base-900">Trusted Products</p>
+
+					<p class="mt-1 text-xs leading-5 text-theme-base-600">
+						Quality technology from trusted brands.
+					</p>
+				</div>
+			</div>
+
+			<div class="flex items-center gap-3">
+				<div class="flex size-11 shrink-0 items-center justify-center rounded-full bg-blue-500/10">
+					<Headphones class="size-5 text-blue-500" />
+				</div>
+
+				<div>
+					<p class="text-sm font-bold text-theme-base-900">Expert Support</p>
+
+					<p class="mt-1 text-xs leading-5 text-theme-base-600">
+						Technology support before and after purchase.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-6 lg:gap-8 lg:py-16">
+		<div class="sm:col-span-2">
+			<a href="/" class="inline-flex items-center" aria-label="TweakMart home">
+				<img src="/public/assets/tweakmartdark.png" class="w-72" />
+			</a>
+
+			<p class="mt-4 max-w-sm text-sm leading-6 text-theme-base-600">
+				Your technology marketplace for trusted hardware, software, networking equipment,
+				accessories, cloud solutions, and enterprise technology.
+			</p>
+
+			<p class="mt-4 text-xs font-semibold uppercase tracking-wider text-theme-base-500">
+				A product of CloudTweak Technologies Limited
+			</p>
+
+			<div class="mt-6 space-y-3 text-sm text-theme-base-600">
+				<a
+					href="mailto:sales@cloudtweak.net"
+					class="flex w-fit items-center gap-3 transition hover:text-blue-500"
+				>
+					<Mail class="size-4 shrink-0" />
+					<span>sales@cloudtweak.net</span>
+				</a>
+
+				<a
+					href="tel:+2340000000000"
+					class="flex w-fit items-center gap-3 transition hover:text-blue-500"
+				>
+					<Phone class="size-4 shrink-0" />
+					<span>+234 (0) 8143099128</span>
+				</a>
+
+				<div class="flex items-start gap-3">
+					<MapPin class="mt-0.5 size-4 shrink-0" />
+
+					<span>Lagos, Nigeria</span>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<h2 class="text-sm font-bold text-theme-base-900">Shop</h2>
+
+			<ul class="mt-5 space-y-3 text-sm text-theme-base-600">
+				<li>
+					<a href="/products" class="transition hover:text-blue-500"> All Products</a>
+				</li>
+
+				{
+					storefrontCategories.map((category) => (
+						<li>
+							<a href={`/collections/${category.slug}`} class="transition hover:text-blue-500">
+								{category.name}
+							</a>
+						</li>
+					))
+				}
+
+				<li>
+					<a href="/deals" class="transition hover:text-blue-500"> Deals & Offers</a>
+				</li>
+			</ul>
+		</div>
+
+		<div>
+			<h2 class="text-sm font-bold text-theme-base-900">Customer Service</h2>
+
+			<ul class="mt-5 space-y-3 text-sm text-theme-base-600">
+				<li>
+					<a href="/help" class="transition hover:text-blue-500"> Help Center</a>
+				</li>
+
+				<li>
+					<a href="/shipping-delivery" class="transition hover:text-blue-500"> Track Your Order</a>
+				</li>
+
+				<li>
+					<a href="/shipping-delivery" class="transition hover:text-blue-500">
+						Shipping & Delivery</a
+					>
+				</li>
+
+				<li>
+					<a href="/returns" class="transition hover:text-blue-500"> Returns & Refunds</a>
+				</li>
+
+				<li>
+					<a href="/warranty" class="transition hover:text-blue-500"> Warranty</a>
+				</li>
+
+				<li>
+					<a href="/technical-support" class="transition hover:text-blue-500"> Contact Support</a>
+				</li>
+			</ul>
+		</div>
+
+		<div>
+			<h2 class="text-sm font-bold text-theme-base-900">For Business</h2>
+
+			<ul class="mt-5 space-y-3 text-sm text-theme-base-600">
+				<li>
+					<a href="/request-quote" class="transition hover:text-blue-500"> Business Purchasing</a>
+				</li>
+
+				<li>
+					<a href="/bulk-orders" class="transition hover:text-blue-500"> Bulk Orders</a>
+				</li>
+
+				<li>
+					<a href="/vendors" class="inline-flex items-center gap-2 transition hover:text-blue-500">
+						<span>Become a Vendor</span>
+
+						<span
+							class="rounded-full bg-pink-500 px-2 py-0.5 text-[8px] font-bold uppercase tracking-wide text-white"
+						>
+							Coming soon
+						</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="/partner-with-us" class="transition hover:text-blue-500"> Partner With Us</a>
+				</li>
+			</ul>
+		</div>
+
+		<div>
+			<h2 class="text-sm font-bold text-theme-base-900">About Us</h2>
+
+			<ul class="mt-5 space-y-3 text-sm text-theme-base-600">
+				<li>
+					<a href="/about" class="transition hover:text-blue-500"> Who we are</a>
+				</li>
+
+				<li>
+					<ExternalLink
+						href="https://cloudtweak.net/academy"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						CloudTweak Academy
+					</ExternalLink>
+				</li>
+
+				<li>
+					<ExternalLink
+						href="https://cloudtweak.net/careers"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						CloudTweak Careers
+					</ExternalLink>
+				</li>
+
+				<li>
+					<a href="/blog" class="transition hover:text-blue-500"> Blog</a>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="grid gap-6 border-t border-theme-base-300 py-7 md:grid-cols-2 md:items-center">
+		<div>
+			<p class="text-xs font-semibold uppercase tracking-wider text-theme-base-500">
+				Payments processed by
+			</p>
+
+			<ul class="mt-3 flex flex-wrap items-center gap-2" aria-label="Supported payment methods">
+				<a class="flex h-9 items-center" target="_blank" href="https://paystack.com">
+					<img src="/assets/paystack.png" class="h-15 w-48" />
+				</a>
+			</ul>
+		</div>
+
+		<div class="md:justify-self-end">
+			<p class="text-xs font-semibold uppercase tracking-wider text-theme-base-500 md:text-right">
+				Follow TweakMart
+			</p>
+
+			<ul class="mt-3 flex flex-wrap items-center gap-2" aria-label="TweakMart social links">
+				<li>
+					<a
+						href="#"
+						aria-label="X"
+						class="flex size-9 items-center justify-center rounded-full border border-theme-base-300 transition hover:border-orange-500 hover:text-blue-500"
+					>
+						<Icon name="simple-icons:x" class="size-4" />
+					</a>
+				</li>
+
+				<li>
+					<a
+						href="#"
+						aria-label="Instagram"
+						class="flex size-9 items-center justify-center rounded-full border border-theme-base-300 transition hover:border-orange-500 hover:text-blue-500"
+					>
+						<Icon name="simple-icons:instagram" class="size-4" />
+					</a>
+				</li>
+
+				<li>
+					<a
+						href="#"
+						aria-label="Facebook"
+						class="flex size-9 items-center justify-center rounded-full border border-theme-base-300 transition hover:border-orange-500 hover:text-blue-500"
+					>
+						<Icon name="simple-icons:facebook" class="size-4" />
+					</a>
+				</li>
+
+				<li>
+					<a
+						href="#"
+						aria-label="TikTok"
+						class="flex size-9 items-center justify-center rounded-full border border-theme-base-300 transition hover:border-orange-500 hover:text-blue-500"
+					>
+						<Icon name="simple-icons:tiktok" class="size-4" />
+					</a>
+				</li>
+
+				<li>
+					<a
+						href="#"
+						aria-label="YouTube"
+						class="flex size-9 items-center justify-center rounded-full border border-theme-base-300 transition hover:border-orange-500 hover:text-blue-500"
+					>
+						<Icon name="simple-icons:youtube" class="size-4" />
+					</a>
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section
+		class="flex flex-col gap-5 border-t border-theme-base-300 py-6 text-xs text-theme-base-600 lg:flex-row lg:items-center lg:justify-between"
+	>
+		<p>
+			© {new Date().getFullYear()} TweakMart. A product of
+			<ExternalLink href="https://cloudtweak.net/" target="_blank" rel="noopener noreferrer">
+				CloudTweak Technologies Limited
+			</ExternalLink>. All Rights Reserved.
+		</p>
+
+		<nav aria-label="Legal">
+			<ul class="flex flex-wrap gap-x-5 gap-y-2">
+				<li>
+					<a href="/privacy" class="transition hover:text-blue-500"> Privacy Policy</a>
+				</li>
+
+				<li>
+					<a href="/terms" class="transition hover:text-blue-500"> Terms & Conditions</a>
+				</li>
+
+				<li>
+					<a href="/cookies" class="transition hover:text-blue-500"> Cookie Policy</a>
+				</li>
+
+				<button
+					id="open-cookie-preferences"
+					type="button"
+					class="text-left transition hover:text-blue-500"
+				>
+					Cookie preferences
+				</button>
+
+				<li>
+					<a href="/acceptable-use" class="transition hover:text-blue-500"> Acceptable Use</a>
+				</li>
+			</ul>
+		</nav>
+	</section>
+</footer>
+
+<script is:inline>
+	function initializeCookiePreferencesButton() {
+		const button = document.getElementById('open-cookie-preferences');
+
+		if (!button || button.dataset.cookiePreferencesInitialized === 'true') {
+			return;
+		}
+
+		button.dataset.cookiePreferencesInitialized = 'true';
+
+		button.addEventListener('click', () => {
+			window.dispatchEvent(new CustomEvent('tweakmart:open-cookie-preferences'));
+		});
+	}
+
+	initializeCookiePreferencesButton();
+
+	document.addEventListener('astro:page-load', initializeCookiePreferencesButton);
+</script>

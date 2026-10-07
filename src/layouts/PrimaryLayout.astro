@@ -1,0 +1,82 @@
+---
+import SiteFooter from '~/components/layout/SiteFooter.astro';
+import SiteHeader from '~/components/layout/SiteHeader.astro';
+// import { SolidQueryDevtools } from "~/components/SolidQueryDevtools.tsx";
+import CookieConsent from '../features/privacy/CookieConsent';
+import { FATHOM_SITE_ID } from 'astro:env/client';
+
+import '../styles.css';
+import SiteRibbon from '~/components/layout/SiteRibbon.astro';
+
+// const defaults = {
+// 	name: 'TweakMart',
+// 	description: 'A CloudTweak marketplace product',
+// 	image: {
+// 		src: new URL('/social-v2.jpg?v=1', Astro.site).href,
+// 		alt: 'TweakMart',
+// 	},
+// } as const;
+
+type Props = {
+	title: string;
+	description?: string;
+	fullWidth?: boolean;
+};
+
+const { fullWidth = false } = Astro.props;
+---
+
+<html lang="en" class="overflow-x-clip bg-white text-theme-base-900">
+	<head>
+		<meta charset="UTF-8" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+		<meta name="theme-color" content="#000033" />
+
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<link rel="mask-icon" href="/favicon.svg" color="#8D46E7" />
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+		<link
+			href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap"
+			rel="stylesheet"
+		/>
+
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
+
+		<!-- <SEO {...seo} {title} /> -->
+
+		{
+			FATHOM_SITE_ID && (
+				<script
+					src="https://cdn.usefathom.com/script.js"
+					data-site={FATHOM_SITE_ID}
+					is:inline
+					defer
+				/>
+			)
+		}
+	</head>
+
+	<body class="min-h-screen text-theme-base-900">
+		<div class="flex min-h-screen flex-col">
+			<SiteRibbon />
+			<SiteHeader />
+			<main class:list={['min-w-0 flex-1 bg-white', !fullWidth && 'content-grid']}>
+				<slot />
+			</main>
+			<div class="bg-white">
+				<SiteFooter />
+			</div>
+		</div>
+		<CookieConsent client:load />
+	</body>
+</html>

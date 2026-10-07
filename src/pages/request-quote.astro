@@ -1,0 +1,164 @@
+---
+import { Building2, PackageSearch } from 'lucide-astro';
+import RequestQuoteForm from '../features/quotes/RequestQuoteForm';
+import Layout from '../layouts/PrimaryLayout.astro';
+---
+
+<Layout
+	title="Request a Quote | TweakMart"
+	description="Request a tailored quote from TweakMart for business technology, bulk purchases, hardware, software and IT procurement."
+>
+	<!-- Quote hero -->
+	<section class="border-b border-slate-200 bg-white">
+		<div class="mx-auto max-w-[1440px] py-10 sm:px-6 lg:px-8 lg:py-14">
+			<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-slate-500">
+				<a href="/" class="transition hover:text-blue-600"> Home</a>
+
+				<span aria-hidden="true">/</span>
+
+				<span class="font-semibold text-slate-900"> Request a Quote</span>
+			</nav>
+
+			<div class="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-end">
+				<div class="max-w-3xl">
+					<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
+						Business & procurement
+					</p>
+
+					<h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+						Tell us what you need. We'll help you source it.
+					</h1>
+
+					<p class="mt-5 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
+						Whether you're buying one specialized device or equipping an entire team, send us your
+						requirements and TweakMart will prepare a quote tailored to your needs.
+					</p>
+				</div>
+
+				<div class="grid gap-3 sm:grid-cols-2">
+					<div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+						<div class="flex size-10 items-center justify-center rounded-xl bg-blue-100">
+							<PackageSearch class="size-5 text-blue-600" />
+						</div>
+
+						<p class="mt-4 text-sm font-bold text-slate-950">Flexible sourcing</p>
+
+						<p class="mt-1 text-xs leading-5 text-slate-500">
+							Request products even when they're not currently listed on TweakMart.
+						</p>
+					</div>
+
+					<div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+						<div class="flex size-10 items-center justify-center rounded-xl bg-blue-100">
+							<Building2 class="size-5 text-blue-600" />
+						</div>
+
+						<p class="mt-4 text-sm font-bold text-slate-950">Built for business</p>
+
+						<p class="mt-1 text-xs leading-5 text-slate-500">
+							From individual purchases to organization-wide technology requirements.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Quote form -->
+	<section>
+		<div class="mx-auto max-w-[1440px] py-10 sm:px-6 lg:px-8 lg:py-14">
+			<div class="mb-8">
+				<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">Request details</p>
+
+				<div class="mt-2 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+					<div>
+						<h2 class="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+							Build your quote request
+						</h2>
+
+						<p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+							Add your contact details, required products and delivery information. You can request
+							products that are not currently listed in our catalogue.
+						</p>
+					</div>
+
+					<p class="text-xs font-medium text-slate-500">Fields marked * are required</p>
+				</div>
+			</div>
+
+			<RequestQuoteForm client:load />
+		</div>
+	</section>
+
+	<!-- Quote process -->
+	<section class="border-t border-slate-200 bg-white">
+		<div class="mx-auto max-w-[1440px] px-4 py-12 sm:px-6 md:py-16 lg:px-8">
+			<div
+				class="grid gap-10 md:grid-cols-[320px_minmax(0,1fr)] md:gap-12 lg:grid-cols-[380px_minmax(0,1fr)] lg:gap-20"
+			>
+				<!-- Section introduction -->
+				<div>
+					<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
+						What happens next
+					</p>
+
+					<h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+						You send the request.
+						<span class="text-slate-400"> We handle the rest.</span>
+					</h2>
+				</div>
+
+				<!-- Process -->
+				<div class="border-t border-slate-200">
+					<!-- Step 1 -->
+					<div
+						class="grid gap-4 border-b border-slate-200 py-6 sm:grid-cols-[70px_minmax(0,220px)_minmax(0,1fr)] sm:items-start sm:gap-6"
+					>
+						<div>
+							<span class="text-sm font-bold text-blue-600"> 01</span>
+						</div>
+
+						<h3 class="text-base font-bold text-slate-950">We review your request</h3>
+
+						<p class="max-w-xl text-sm leading-6 text-slate-500">
+							We check the products, quantities, specifications, budget and delivery requirements
+							you've submitted.
+						</p>
+					</div>
+
+					<!-- Step 2 -->
+					<div
+						class="grid gap-4 border-b border-slate-200 py-6 sm:grid-cols-[70px_minmax(0,220px)_minmax(0,1fr)] sm:items-start sm:gap-6"
+					>
+						<div>
+							<span class="text-sm font-bold text-blue-600"> 02</span>
+						</div>
+
+						<h3 class="text-base font-bold text-slate-950">We source the right options</h3>
+
+						<p class="max-w-xl text-sm leading-6 text-slate-500">
+							Our team confirms availability, evaluates suitable alternatives where necessary and
+							works out the commercial details.
+						</p>
+					</div>
+
+					<!-- Step 3 -->
+					<div
+						class="grid gap-4 border-b border-slate-200 py-6 sm:grid-cols-[70px_minmax(0,220px)_minmax(0,1fr)] sm:items-start sm:gap-6"
+					>
+						<div>
+							<span class="text-sm font-bold text-blue-600"> 03</span>
+						</div>
+
+						<h3 class="text-base font-bold text-slate-950">Your quote is prepared</h3>
+
+						<p class="max-w-xl text-sm leading-6 text-slate-500">
+							You receive pricing, available options and the information you need to decide how
+							you'd like to proceed.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>

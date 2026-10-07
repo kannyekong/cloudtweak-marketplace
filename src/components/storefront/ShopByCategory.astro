@@ -1,0 +1,59 @@
+---
+import { ArrowRight } from 'lucide-astro';
+
+import CategoryCard from './CategoryCard.astro';
+
+import { getFeaturedStorefrontCategories } from '~/lib/tweakmart/storefront-categories.ts';
+
+const categories = await getFeaturedStorefrontCategories(6);
+---
+
+{
+	categories.length > 0 && (
+		<section class="rounded-2xl border bg-white sm:py-6 lg:py-7">
+			<div class="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8">
+				<div class="mb-6 flex items-end justify-between gap-5 sm:mb-8">
+					<div>
+						<h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+							Shop by category
+						</h2>
+
+						<p class="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+							Find the technology you need by browsing our featured product categories.
+						</p>
+					</div>
+
+					<a
+						href="/collections"
+						class="hidden shrink-0 items-center gap-2 text-sm font-bold text-blue-600 transition hover:text-blue-700 sm:flex"
+					>
+						View all categories
+						<ArrowRight class="size-4" />
+					</a>
+				</div>
+
+				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+					{categories.map((category) => (
+						<CategoryCard
+							name={category.name}
+							slug={category.slug}
+							description={category.description}
+							imageUrl={category.image_url}
+							featured={category.featured}
+						/>
+					))}
+				</div>
+
+				<div class="mt-6 pb-5 sm:hidden">
+					<a
+						href="/collections"
+						class="flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-sm font-bold text-slate-800 transition hover:border-blue-200 hover:text-blue-600"
+					>
+						View all categories
+						<ArrowRight class="size-4" />
+					</a>
+				</div>
+			</div>
+		</section>
+	)
+}

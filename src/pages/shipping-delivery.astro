@@ -1,0 +1,504 @@
+---
+import {
+	ArrowRight,
+	Box,
+	Building2,
+	CheckCircle2,
+	Clock3,
+	MapPin,
+	Navigation,
+	PackageCheck,
+	Route,
+	ShieldCheck,
+	Truck,
+	Warehouse,
+} from 'lucide-astro';
+
+import Layout from '../layouts/PrimaryLayout.astro';
+---
+
+<Layout
+	title="Shipping & Delivery | TweakMart"
+	description="Learn how TweakMart processes, ships and delivers technology orders through trusted logistics partners across Nigeria."
+>
+	<!-- Minimal shipping and tracking hero -->
+	<section class="relative overflow-hidden border-b border-slate-200 bg-slate-50">
+		<div
+			class="pointer-events-none absolute left-1/2 top-0 size-[28rem] -translate-x-1/2 rounded-full bg-blue-100/70 blur-3xl"
+			aria-hidden="true"
+		>
+		</div>
+
+		<div class="relative mx-auto max-w-[1440px] px-4 py-14 sm:px-6 md:py-20 xl:px-8">
+			<div class="mx-auto max-w-4xl text-center">
+				<div
+					class="mx-auto flex size-12 items-center justify-center rounded-2xl border border-blue-100 bg-white text-blue-600 shadow-sm"
+				>
+					<Truck class="size-5" />
+				</div>
+
+				<p class="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
+					Shipping & Delivery
+				</p>
+
+				<h1
+					class="mx-auto mt-3 max-w-3xl text-3xl font-black tracking-tight text-slate-950 sm:text-4xl md:text-5xl"
+				>
+					Where&apos;s your order?
+				</h1>
+
+				<p class="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
+					Enter your TweakMart tracking ID below to check the latest status of your delivery.
+				</p>
+
+				<!-- Tracking search -->
+				<form action="/orders" method="get" class="mx-auto mt-8 max-w-3xl">
+					<div
+						class="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white p-2 shadow-lg shadow-slate-200/50 sm:flex-row sm:items-center"
+					>
+						<div class="relative min-w-0 flex-1">
+							<MapPin
+								class="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-slate-400"
+								aria-hidden="true"
+							/>
+
+							<input
+								type="text"
+								name="tracking"
+								autocomplete="off"
+								placeholder="Enter your tracking ID"
+								aria-label="Tracking ID"
+								class="h-14 w-full rounded-xl border-0 bg-transparent pl-12 pr-4 text-base font-semibold text-slate-950 outline-none placeholder:font-normal placeholder:text-slate-400 focus:ring-0"
+								required
+							/>
+						</div>
+
+						<button
+							type="submit"
+							class="inline-flex h-14 shrink-0 items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 text-sm font-bold text-white transition hover:bg-blue-700 sm:min-w-40"
+						>
+							Track order
+							<ArrowRight class="size-4" />
+						</button>
+					</div>
+
+					<div
+						class="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-slate-500"
+					>
+						<span class="inline-flex items-center gap-1.5">
+							<ShieldCheck class="size-3.5 text-emerald-600" />
+							Secure tracking
+						</span>
+
+						<span class="inline-flex items-center gap-1.5">
+							<Navigation class="size-3.5 text-blue-600" />
+							Delivery updates
+						</span>
+
+						<span class="inline-flex items-center gap-1.5">
+							<PackageCheck class="size-3.5 text-violet-600" />
+							Order status
+						</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<!-- Delivery process -->
+	<section class="bg-white">
+		<div class="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 md:py-24 xl:px-8">
+			<div class="max-w-2xl">
+				<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
+					How delivery works
+				</p>
+
+				<h2 class="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+					A simple journey from order confirmation to delivery.
+				</h2>
+
+				<p class="mt-4 text-base leading-7 text-slate-600">
+					We coordinate each stage so you know what happens after your order has been placed.
+				</p>
+			</div>
+
+			<div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+				<article class="relative rounded-3xl border border-slate-200 bg-white p-6">
+					<div
+						class="flex size-10 items-center justify-center rounded-full bg-blue-600 text-sm font-black text-white"
+					>
+						1
+					</div>
+
+					<h3 class="mt-5 text-lg font-black text-slate-950">Order confirmed</h3>
+
+					<p class="mt-3 text-sm leading-7 text-slate-600">
+						We verify your order, payment and delivery information before preparing the shipment.
+					</p>
+				</article>
+
+				<article class="relative rounded-3xl border border-slate-200 bg-white p-6">
+					<div
+						class="flex size-10 items-center justify-center rounded-full bg-blue-50 text-sm font-black text-blue-600"
+					>
+						2
+					</div>
+
+					<h3 class="mt-5 text-lg font-black text-slate-950">Packed & prepared</h3>
+
+					<p class="mt-3 text-sm leading-7 text-slate-600">
+						Your products are prepared for dispatch based on the item type and delivery
+						requirements.
+					</p>
+				</article>
+
+				<article class="relative rounded-3xl border border-slate-200 bg-white p-6">
+					<div
+						class="flex size-10 items-center justify-center rounded-full bg-blue-50 text-sm font-black text-blue-600"
+					>
+						3
+					</div>
+
+					<h3 class="mt-5 text-lg font-black text-slate-950">Logistics assigned</h3>
+
+					<p class="mt-3 text-sm leading-7 text-slate-600">
+						We select an appropriate logistics partner based on destination, availability and
+						shipment requirements.
+					</p>
+				</article>
+
+				<article class="relative rounded-3xl border border-slate-200 bg-white p-6">
+					<div
+						class="flex size-10 items-center justify-center rounded-full bg-blue-50 text-sm font-black text-blue-600"
+					>
+						4
+					</div>
+
+					<h3 class="mt-5 text-lg font-black text-slate-950">Delivered</h3>
+
+					<p class="mt-3 text-sm leading-7 text-slate-600">
+						Your shipment is delivered to the address provided during checkout or agreed for your
+						business order.
+					</p>
+				</article>
+			</div>
+		</div>
+	</section>
+
+	<!-- Logistics partners -->
+	<section class="border-y border-slate-200 bg-slate-50">
+		<div class="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 md:py-24 xl:px-8">
+			<div class="grid gap-10 md:grid-cols-[0.8fr_1.2fr] md:items-start">
+				<div>
+					<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
+						Logistics network
+					</p>
+
+					<h2 class="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+						Delivered through trusted logistics partners.
+					</h2>
+
+					<p class="mt-5 text-base leading-8 text-slate-600">
+						TweakMart may use different delivery providers depending on your location, shipment
+						size, urgency and available service coverage.
+					</p>
+
+					<p class="mt-4 text-sm leading-7 text-slate-500">
+						The logistics provider assigned to an order may therefore vary from one shipment to
+						another.
+					</p>
+				</div>
+
+				<div class="grid gap-4 sm:grid-cols-2">
+					<article class="rounded-3xl border border-slate-200 bg-white p-6">
+						<div
+							class="flex size-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600"
+						>
+							<Truck class="size-5" />
+						</div>
+
+						<h3 class="mt-5 text-lg font-black text-slate-950">GIG Logistics</h3>
+
+						<p class="mt-3 text-sm leading-7 text-slate-600">
+							Used where suitable for domestic delivery, nationwide distribution and larger
+							logistics requirements.
+						</p>
+
+						<div
+							class="mt-5 inline-flex items-center gap-2 rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600"
+						>
+							<MapPin class="size-3.5 text-blue-600" />
+							Nationwide-focused delivery
+						</div>
+					</article>
+
+					<article class="rounded-3xl border border-slate-200 bg-white p-6">
+						<div
+							class="flex size-12 items-center justify-center rounded-2xl bg-violet-50 text-violet-600"
+						>
+							<Navigation class="size-5" />
+						</div>
+
+						<h3 class="mt-5 text-lg font-black text-slate-950">Kwik</h3>
+
+						<p class="mt-3 text-sm leading-7 text-slate-600">
+							Used where appropriate for faster last-mile delivery and fulfillment within supported
+							cities.
+						</p>
+
+						<div
+							class="mt-5 inline-flex items-center gap-2 rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600"
+						>
+							<Clock3 class="size-3.5 text-violet-600" />
+							Last-mile delivery
+						</div>
+					</article>
+
+					<article class="rounded-3xl border border-slate-200 bg-white p-6 sm:col-span-2">
+						<div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+							<div class="flex items-start gap-4">
+								<div
+									class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600"
+								>
+									<Route class="size-5" />
+								</div>
+
+								<div>
+									<h3 class="text-lg font-black text-slate-950">Sendbox</h3>
+
+									<p class="mt-2 max-w-xl text-sm leading-7 text-slate-600">
+										Used where suitable for e-commerce shipping and other local or wider delivery
+										requirements supported by their network.
+									</p>
+								</div>
+							</div>
+
+							<span
+								class="inline-flex shrink-0 items-center gap-2 rounded-full bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600"
+							>
+								<Box class="size-3.5 text-emerald-600" />
+								E-commerce shipping
+							</span>
+						</div>
+					</article>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Delivery expectation -->
+	<section class="bg-white">
+		<div
+			class="mx-auto grid max-w-[1440px] gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center md:py-24 xl:px-8"
+		>
+			<div class="relative overflow-hidden rounded-[2rem] bg-slate-100 p-3">
+				<img
+					src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1400&q=85"
+					alt="Packages being prepared for shipment"
+					class="aspect-[4/3] w-full rounded-[1.5rem] object-cover"
+					loading="lazy"
+				/>
+
+				<div
+					class="absolute bottom-7 left-7 right-7 rounded-2xl bg-white p-4 shadow-xl sm:right-auto sm:max-w-xs"
+				>
+					<div class="flex items-center gap-3">
+						<div
+							class="flex size-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600"
+						>
+							<Warehouse class="size-4" />
+						</div>
+
+						<div>
+							<p class="text-xs font-bold text-slate-950">Prepared with care</p>
+
+							<p class="mt-1 text-[11px] text-slate-500">From inventory to dispatch</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
+					Delivery expectations
+				</p>
+
+				<h2 class="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+					Delivery time depends on the order.
+				</h2>
+
+				<p class="mt-5 text-base leading-8 text-slate-600">
+					Delivery estimates can vary based on the product, destination, stock location, order size,
+					logistics availability and whether the order requires special handling.
+				</p>
+
+				<p class="mt-4 text-base leading-8 text-slate-600">
+					Where a delivery estimate is available, we&apos;ll communicate it during the order process
+					or after your order has been confirmed.
+				</p>
+
+				<div class="mt-7 space-y-4">
+					<div class="flex items-start gap-3">
+						<CheckCircle2 class="mt-0.5 size-5 shrink-0 text-blue-600" />
+
+						<div>
+							<p class="text-sm font-bold text-slate-950">In-stock orders</p>
+
+							<p class="mt-1 text-sm leading-6 text-slate-600">
+								Can generally move into processing more quickly once payment is confirmed.
+							</p>
+						</div>
+					</div>
+
+					<div class="flex items-start gap-3">
+						<CheckCircle2 class="mt-0.5 size-5 shrink-0 text-blue-600" />
+
+						<div>
+							<p class="text-sm font-bold text-slate-950">Bulk and sourced orders</p>
+
+							<p class="mt-1 text-sm leading-6 text-slate-600">
+								May have separate fulfillment and delivery timelines communicated with your
+								quotation.
+							</p>
+						</div>
+					</div>
+
+					<div class="flex items-start gap-3">
+						<CheckCircle2 class="mt-0.5 size-5 shrink-0 text-blue-600" />
+
+						<div>
+							<p class="text-sm font-bold text-slate-950">Special or oversized shipments</p>
+
+							<p class="mt-1 text-sm leading-6 text-slate-600">
+								May require a different delivery method or additional coordination.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Coverage -->
+	<section class="bg-slate-50">
+		<div class="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 md:py-24 xl:px-8">
+			<div class="mx-auto max-w-2xl text-center">
+				<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">Delivery coverage</p>
+
+				<h2 class="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+					Designed for delivery across Nigeria.
+				</h2>
+
+				<p class="mt-4 text-base leading-7 text-slate-600">
+					Available delivery options may differ by location, so the final method is determined using
+					the coverage available for your destination.
+				</p>
+			</div>
+
+			<div class="mt-10 grid gap-4 md:grid-cols-3">
+				<article class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7">
+					<div
+						class="flex size-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600"
+					>
+						<Building2 class="size-5" />
+					</div>
+
+					<h3 class="mt-5 text-lg font-black text-slate-950">Major Cities</h3>
+
+					<p class="mt-3 text-sm leading-7 text-slate-600">
+						Orders to major commercial areas may have access to more delivery options and faster
+						last-mile services.
+					</p>
+				</article>
+
+				<article class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7">
+					<div
+						class="flex size-12 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600"
+					>
+						<MapPin class="size-5" />
+					</div>
+
+					<h3 class="mt-5 text-lg font-black text-slate-950">Nationwide Orders</h3>
+
+					<p class="mt-3 text-sm leading-7 text-slate-600">
+						We can coordinate shipments beyond major cities using logistics services with broader
+						domestic coverage.
+					</p>
+				</article>
+
+				<article class="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7">
+					<div
+						class="flex size-12 items-center justify-center rounded-2xl bg-violet-50 text-violet-600"
+					>
+						<Box class="size-5" />
+					</div>
+
+					<h3 class="mt-5 text-lg font-black text-slate-950">Business Deliveries</h3>
+
+					<p class="mt-3 text-sm leading-7 text-slate-600">
+						Bulk orders and organizational shipments can be coordinated separately according to
+						volume and destination requirements.
+					</p>
+				</article>
+			</div>
+		</div>
+	</section>
+
+	<!-- Important notes -->
+	<section class="bg-white">
+		<div class="mx-auto max-w-[1440px] px-4 py-16 sm:px-6 md:py-24 xl:px-8">
+			<div class="rounded-[2rem] border border-slate-200 bg-slate-50 p-6 sm:p-8 md:p-10">
+				<div class="grid gap-8 md:grid-cols-[0.7fr_1.3fr] md:items-start">
+					<div>
+						<div
+							class="flex size-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600"
+						>
+							<ShieldCheck class="size-5" />
+						</div>
+
+						<h2 class="mt-5 text-2xl font-black tracking-tight text-slate-950">
+							A few things to know.
+						</h2>
+					</div>
+
+					<div class="grid gap-5 sm:grid-cols-2">
+						<div>
+							<p class="text-sm font-bold text-slate-950">Accurate delivery details</p>
+
+							<p class="mt-2 text-sm leading-6 text-slate-600">
+								Please ensure the phone number and delivery address supplied with your order are
+								correct.
+							</p>
+						</div>
+
+						<div>
+							<p class="text-sm font-bold text-slate-950">Delivery availability</p>
+
+							<p class="mt-2 text-sm leading-6 text-slate-600">
+								Some services may not be available in every location or for every product type.
+							</p>
+						</div>
+
+						<div>
+							<p class="text-sm font-bold text-slate-950">Unexpected delays</p>
+
+							<p class="mt-2 text-sm leading-6 text-slate-600">
+								Weather, traffic, public events, logistics disruptions or other circumstances can
+								affect delivery timing.
+							</p>
+						</div>
+
+						<div>
+							<p class="text-sm font-bold text-slate-950">Delivery concerns</p>
+
+							<p class="mt-2 text-sm leading-6 text-slate-600">
+								If something does not look right with your delivery, contact TweakMart support so we
+								can assist.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>

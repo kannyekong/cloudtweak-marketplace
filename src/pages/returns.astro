@@ -1,0 +1,327 @@
+---
+import {
+	ArrowRight,
+	CheckCircle2,
+	CircleDollarSign,
+	Clock3,
+	Headphones,
+	PackageCheck,
+	RefreshCcw,
+	ShieldCheck,
+	XCircle,
+} from 'lucide-astro';
+
+import Layout from '../layouts/PrimaryLayout.astro';
+---
+
+<Layout
+	title="Returns & Refunds | TweakMart"
+	description="Learn about TweakMart return eligibility, return conditions, refund processing and how to get help with an order."
+>
+	<!-- Returns hero -->
+	<section class="border-b border-slate-200 bg-white">
+		<div class="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+			<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs text-slate-500">
+				<a href="/" class="transition hover:text-blue-600"> Home</a>
+
+				<span aria-hidden="true">/</span>
+
+				<a href="/help" class="transition hover:text-blue-600"> Help</a>
+
+				<span aria-hidden="true">/</span>
+
+				<span class="font-semibold text-slate-900"> Returns & Refunds</span>
+			</nav>
+
+			<div
+				class="mt-8 grid gap-8 md:grid-cols-[minmax(0,1fr)_340px] md:items-end lg:grid-cols-[minmax(0,1fr)_420px]"
+			>
+				<div class="max-w-3xl">
+					<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
+						Returns & refunds
+					</p>
+
+					<h1 class="mt-3 text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
+						Something isn't right?
+						<span class="text-slate-400">
+							{' '}We're here to help.
+						</span>
+					</h1>
+
+					<p class="mt-5 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">
+						Find out when an item may be returned, what condition it needs to be in and what happens
+						after a return is approved.
+					</p>
+				</div>
+
+				<div class="rounded-2xl border border-blue-100 bg-blue-50 p-5">
+					<div class="flex items-start gap-4">
+						<div
+							class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white"
+						>
+							<RefreshCcw class="size-5" />
+						</div>
+
+						<div>
+							<p class="text-sm font-bold text-slate-950">Need help with a purchase?</p>
+
+							<p class="mt-1 text-xs leading-5 text-slate-600">
+								Contact support with your order details and we'll help determine the appropriate
+								next step.
+							</p>
+
+							<a
+								href="/support"
+								class="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-blue-700 transition hover:text-blue-900"
+							>
+								Contact Support
+								<ArrowRight class="size-3.5" />
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Policy overview -->
+	<section class="bg-slate-50">
+		<div class="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+			<div class="grid gap-8 md:grid-cols-[280px_minmax(0,1fr)] lg:gap-14">
+				<div>
+					<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">
+						Before you return
+					</p>
+
+					<h2 class="mt-3 text-2xl font-bold tracking-tight text-slate-950">Return eligibility</h2>
+
+					<p class="mt-3 text-sm leading-7 text-slate-600">
+						Return eligibility depends on the product, its condition and the circumstances
+						surrounding the request.
+					</p>
+				</div>
+
+				<div class="grid gap-4 sm:grid-cols-2">
+					<div class="rounded-2xl border border-slate-200 bg-white p-5">
+						<div class="flex size-10 items-center justify-center rounded-xl bg-emerald-50">
+							<PackageCheck class="size-5 text-emerald-600" />
+						</div>
+
+						<h3 class="mt-4 text-base font-bold text-slate-950">Keep the item complete</h3>
+
+						<p class="mt-2 text-sm leading-6 text-slate-500">
+							Where applicable, the product should include its original packaging, accessories,
+							manuals and other items supplied with it.
+						</p>
+					</div>
+
+					<div class="rounded-2xl border border-slate-200 bg-white p-5">
+						<div class="flex size-10 items-center justify-center rounded-xl bg-blue-50">
+							<Clock3 class="size-5 text-blue-600" />
+						</div>
+
+						<h3 class="mt-4 text-base font-bold text-slate-950">Contact us promptly</h3>
+
+						<p class="mt-2 text-sm leading-6 text-slate-500">
+							If your order arrives damaged, incorrect or develops an immediate issue, contact us as
+							soon as reasonably possible after discovering it.
+						</p>
+					</div>
+
+					<div class="rounded-2xl border border-slate-200 bg-white p-5">
+						<div class="flex size-10 items-center justify-center rounded-xl bg-blue-50">
+							<ShieldCheck class="size-5 text-blue-600" />
+						</div>
+
+						<h3 class="mt-4 text-base font-bold text-slate-950">Protect your proof of purchase</h3>
+
+						<p class="mt-2 text-sm leading-6 text-slate-500">
+							Keep your order number, receipt or other purchase information available. We may need
+							it when reviewing your request.
+						</p>
+					</div>
+
+					<div class="rounded-2xl border border-slate-200 bg-white p-5">
+						<div class="flex size-10 items-center justify-center rounded-xl bg-rose-50">
+							<XCircle class="size-5 text-rose-600" />
+						</div>
+
+						<h3 class="mt-4 text-base font-bold text-slate-950">Some items may be excluded</h3>
+
+						<p class="mt-2 text-sm leading-6 text-slate-500">
+							Certain products may have return restrictions because of licensing, activation,
+							hygiene, customization or manufacturer conditions.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Return process -->
+	<section class="border-t border-slate-200 bg-white">
+		<div class="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+			<div class="max-w-2xl">
+				<p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">How it works</p>
+
+				<h2 class="mt-2 text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
+					From request to resolution
+				</h2>
+			</div>
+
+			<div class="mt-8 border-t border-slate-200">
+				<div
+					class="grid gap-3 border-b border-slate-200 py-6 md:grid-cols-[80px_260px_minmax(0,1fr)] md:gap-8"
+				>
+					<p class="text-sm font-bold text-blue-600">01</p>
+
+					<h3 class="text-base font-bold text-slate-950">Contact TweakMart</h3>
+
+					<p class="max-w-2xl text-sm leading-6 text-slate-500">
+						Provide your order information and explain the reason you're requesting a return.
+					</p>
+				</div>
+
+				<div
+					class="grid gap-3 border-b border-slate-200 py-6 md:grid-cols-[80px_260px_minmax(0,1fr)] md:gap-8"
+				>
+					<p class="text-sm font-bold text-blue-600">02</p>
+
+					<h3 class="text-base font-bold text-slate-950">We review the request</h3>
+
+					<p class="max-w-2xl text-sm leading-6 text-slate-500">
+						We'll review the product, order details and circumstances to confirm the available
+						resolution.
+					</p>
+				</div>
+
+				<div
+					class="grid gap-3 border-b border-slate-200 py-6 md:grid-cols-[80px_260px_minmax(0,1fr)] md:gap-8"
+				>
+					<p class="text-sm font-bold text-blue-600">03</p>
+
+					<h3 class="text-base font-bold text-slate-950">Return the product</h3>
+
+					<p class="max-w-2xl text-sm leading-6 text-slate-500">
+						If the return is approved, we'll provide the instructions needed to return or hand over
+						the product.
+					</p>
+				</div>
+
+				<div
+					class="grid gap-3 border-b border-slate-200 py-6 md:grid-cols-[80px_260px_minmax(0,1fr)] md:gap-8"
+				>
+					<p class="text-sm font-bold text-blue-600">04</p>
+
+					<h3 class="text-base font-bold text-slate-950">Inspection & resolution</h3>
+
+					<p class="max-w-2xl text-sm leading-6 text-slate-500">
+						Once received, the item may be inspected before the applicable replacement, refund or
+						other resolution is completed.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Refunds -->
+	<section class="bg-slate-50">
+		<div class="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+			<div class="overflow-hidden rounded-3xl border border-slate-200 bg-white">
+				<div class="grid md:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
+					<div class="bg-[#000033] p-6 text-white sm:p-8 md:p-10">
+						<div class="flex size-11 items-center justify-center rounded-xl bg-white/10">
+							<CircleDollarSign class="size-5 text-blue-200" />
+						</div>
+
+						<p class="mt-6 text-xs font-bold uppercase tracking-[0.18em] text-blue-300">Refunds</p>
+
+						<h2 class="mt-2 text-2xl font-bold tracking-tight">When a refund is approved</h2>
+
+						<p class="mt-3 text-sm leading-7 text-slate-300">
+							We'll process the refund using the appropriate payment method once the return and
+							refund requirements have been satisfied.
+						</p>
+					</div>
+
+					<div class="p-6 sm:p-8 md:p-10">
+						<div class="space-y-6">
+							<div class="flex gap-4">
+								<CheckCircle2 class="mt-0.5 size-5 shrink-0 text-emerald-600" />
+
+								<div>
+									<h3 class="text-sm font-bold text-slate-950">Payment processing</h3>
+
+									<p class="mt-1 text-sm leading-6 text-slate-500">
+										Approved refunds are processed through the applicable payment channel. The time
+										it takes to appear may also depend on your bank or payment provider.
+									</p>
+								</div>
+							</div>
+
+							<div class="flex gap-4">
+								<CheckCircle2 class="mt-0.5 size-5 shrink-0 text-emerald-600" />
+
+								<div>
+									<h3 class="text-sm font-bold text-slate-950">Inspection may be required</h3>
+
+									<p class="mt-1 text-sm leading-6 text-slate-500">
+										Where a physical product is returned, we may need to receive and inspect it
+										before completing the refund.
+									</p>
+								</div>
+							</div>
+
+							<div class="flex gap-4">
+								<CheckCircle2 class="mt-0.5 size-5 shrink-0 text-emerald-600" />
+
+								<div>
+									<h3 class="text-sm font-bold text-slate-950">We'll keep you informed</h3>
+
+									<p class="mt-1 text-sm leading-6 text-slate-500">
+										If additional information or action is required, we'll contact you using the
+										details associated with your request.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Support CTA -->
+	<section class="border-t border-slate-200 bg-white">
+		<div class="mx-auto max-w-[1440px] px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+			<div
+				class="flex flex-col gap-6 rounded-3xl bg-blue-50 p-6 sm:p-8 md:flex-row md:items-center md:justify-between"
+			>
+				<div class="flex items-start gap-4">
+					<div
+						class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white"
+					>
+						<Headphones class="size-5" />
+					</div>
+
+					<div>
+						<h2 class="text-lg font-bold text-slate-950">Need help with a return?</h2>
+
+						<p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
+							Have your order details ready and contact our support team so we can review your
+							request.
+						</p>
+					</div>
+				</div>
+
+				<a
+					href="/support"
+					class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 text-sm font-bold text-white transition hover:bg-blue-700"
+				>
+					Contact Support
+					<ArrowRight class="size-4" />
+				</a>
+			</div>
+		</div>
+	</section>
+</Layout>

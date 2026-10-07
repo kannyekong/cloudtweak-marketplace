@@ -1,0 +1,23 @@
+---
+import LandingHero from '~/components/hero/LandingHero.astro';
+import ProductCarouselSection from '~/features/product/ProductCarouselSection.astro';
+import { applyDefaultCacheHeaders } from '~/config.ts';
+import PrimaryLayout from '~/layouts/PrimaryLayout.astro';
+import ShopByCategory from '~/components/storefront/ShopByCategory.astro';
+import AllProductsSection from '~/components/storefront/AllProductsSection.astro';
+import Quicklinks from '~/components/storefront/Quicklinks.astro';
+
+applyDefaultCacheHeaders(Astro.response.headers);
+---
+
+<PrimaryLayout title="Cloudtweak Marketplace">
+	<LandingHero />
+	<main class="breakout mt-16 flex flex-col gap-y-16">
+		<div class="content">
+			<ProductCarouselSection heading="Popular right now" />
+		</div>
+		<ShopByCategory />
+		<AllProductsSection />
+		<Quicklinks />
+	</main>
+</PrimaryLayout>

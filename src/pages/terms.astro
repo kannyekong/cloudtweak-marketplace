@@ -1,0 +1,403 @@
+---
+import { CreditCard, FileText, PackageCheck, Scale, ShieldCheck, Truck } from 'lucide-astro';
+
+import Layout from '../layouts/PrimaryLayout.astro';
+
+const sections = [
+	['agreement', '1. Agreement to These Terms'],
+	['tweakmart', '2. About TweakMart'],
+	['eligibility', '3. Using TweakMart'],
+	['products', '4. Products & Information'],
+	['orders', '5. Orders'],
+	['pricing', '6. Pricing & Payment'],
+	['availability', '7. Availability'],
+	['delivery', '8. Shipping & Delivery'],
+	['returns', '9. Returns, Refunds & Cancellations'],
+	['warranty', '10. Product Warranties'],
+	['business', '11. Quotes & Business Orders'],
+	['support', '12. Technical Support'],
+	['accounts', '13. Accounts'],
+	['acceptable-use', '14. Acceptable Use'],
+	['intellectual-property', '15. Intellectual Property'],
+	['third-parties', '16. Third-Party Services'],
+	['liability', '17. Liability'],
+	['indemnity', '18. Your Responsibility'],
+	['law', '19. Applicable Law'],
+	['changes', '20. Changes to These Terms'],
+	['contact', '21. Contact Us'],
+];
+---
+
+<Layout
+	title="Terms and Conditions | TweakMart"
+	description="Terms and Conditions governing your access to and use of TweakMart."
+>
+	<section class="border-b border-slate-200">
+		<div class="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 md:py-20 xl:px-8">
+			<div class="max-w-3xl">
+				<div
+					class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700"
+				>
+					<FileText class="size-4" />
+					TweakMart Terms
+				</div>
+
+				<h1 class="mt-5 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
+					Terms and Conditions
+				</h1>
+
+				<p class="mt-5 max-w-2xl text-base leading-8 text-slate-600">
+					These Terms and Conditions govern access to and use of TweakMart, including purchases,
+					quotations, business orders, support requests and related services.
+				</p>
+
+				<p class="mt-5 text-sm font-semibold text-slate-500">Effective date: 8 September 2026</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-white">
+		<div
+			class="mx-auto grid max-w-[1440px] gap-10 px-4 py-12 sm:px-6 md:grid-cols-[0.7fr_1.3fr] md:items-start md:py-16 xl:px-8"
+		>
+			<aside class="md:sticky md:top-8">
+				<div
+					class="max-h-[calc(100vh-4rem)] overflow-y-auto rounded-2xl border border-slate-200 bg-slate-50 p-5"
+				>
+					<p class="text-xs font-bold uppercase tracking-wider text-slate-500">Contents</p>
+
+					<nav class="mt-4 space-y-1">
+						{
+							sections.map(([id, label]) => (
+								<a
+									href={`#${id}`}
+									class="block rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-white hover:text-blue-600"
+								>
+									{label}
+								</a>
+							))
+						}
+					</nav>
+				</div>
+			</aside>
+
+			<article class="min-w-0">
+				<div class="mb-10 rounded-2xl border border-blue-100 bg-blue-50 p-5">
+					<p class="text-sm leading-7 text-slate-700">
+						<strong>TweakMart</strong> is a technology commerce product operated by
+						<strong>CloudTweak Technologies Limited</strong>. Please read these Terms carefully
+						before using TweakMart.
+					</p>
+				</div>
+
+				<div class="space-y-12 text-[15px] leading-8 text-slate-600">
+					<section id="agreement" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">1. Agreement to These Terms</h2>
+
+						<p class="mt-4">
+							By accessing TweakMart, placing an order, submitting a request or using our services,
+							you agree to these Terms and any policies referenced in them.
+						</p>
+
+						<p class="mt-4">
+							If you are acting on behalf of an organization, you represent that you are authorized
+							to act on its behalf in connection with the relevant transaction or request.
+						</p>
+					</section>
+
+					<section id="tweakmart" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">2. About TweakMart</h2>
+
+						<p class="mt-4">
+							TweakMart provides access to technology products and related services, including
+							technology purchasing, product sourcing, bulk orders, quotations and technical
+							support.
+						</p>
+					</section>
+
+					<section id="eligibility" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">3. Using TweakMart</h2>
+
+						<p class="mt-4">
+							You must use TweakMart in accordance with applicable law and provide accurate
+							information when completing transactions, submitting enquiries or requesting services.
+						</p>
+					</section>
+
+					<section id="products" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">4. Products & Information</h2>
+
+						<p class="mt-4">
+							We aim to present product descriptions, specifications, images, pricing and
+							availability accurately. Product appearance, packaging, specifications or manufacturer
+							information may change, and display colours may vary depending on the device being
+							used.
+						</p>
+
+						<p class="mt-4">
+							Where a particular specification is essential to your purchase, you should review the
+							information available for that product or contact us before ordering.
+						</p>
+					</section>
+
+					<section id="orders" class="scroll-mt-24">
+						<div class="flex items-center gap-3">
+							<PackageCheck class="size-6 text-blue-600" />
+							<h2 class="text-2xl font-black text-slate-950">5. Orders</h2>
+						</div>
+
+						<p class="mt-4">
+							Submission of an order does not necessarily mean that it has been finally accepted or
+							fulfilled. An order may remain subject to payment confirmation, availability,
+							verification and other reasonable processing requirements.
+						</p>
+
+						<p class="mt-4">
+							We may contact you where additional information is reasonably required to process an
+							order.
+						</p>
+					</section>
+
+					<section id="pricing" class="scroll-mt-24">
+						<div class="flex items-center gap-3">
+							<CreditCard class="size-6 text-blue-600" />
+							<h2 class="text-2xl font-black text-slate-950">6. Pricing & Payment</h2>
+						</div>
+
+						<p class="mt-4">
+							Prices displayed on TweakMart are shown in the currency indicated on the website and
+							may change from time to time.
+						</p>
+
+						<p class="mt-4">
+							Promotional or deal pricing may apply only during the stated promotional period and
+							while applicable conditions are satisfied.
+						</p>
+
+						<p class="mt-4">
+							Payments may be processed by third-party payment providers. An order should not be
+							treated as paid solely because a browser or payment page reports success; payment
+							remains subject to confirmation through our payment-processing systems.
+						</p>
+					</section>
+
+					<section id="availability" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">7. Availability</h2>
+
+						<p class="mt-4">
+							Products and offers are subject to availability. Stock levels can change while
+							customers are shopping or while a transaction is being processed.
+						</p>
+
+						<p class="mt-4">
+							Where we cannot fulfil an order as expected, we may contact you to discuss available
+							options in accordance with applicable law and our policies.
+						</p>
+					</section>
+
+					<section id="delivery" class="scroll-mt-24">
+						<div class="flex items-center gap-3">
+							<Truck class="size-6 text-blue-600" />
+							<h2 class="text-2xl font-black text-slate-950">8. Shipping & Delivery</h2>
+						</div>
+
+						<p class="mt-4">
+							Delivery availability and timing may depend on product availability, destination,
+							shipment size, logistics coverage and other circumstances.
+						</p>
+
+						<p class="mt-4">
+							We may use third-party logistics providers to fulfil deliveries. Delivery estimates
+							are estimates rather than guarantees unless we expressly agree otherwise.
+						</p>
+
+						<p class="mt-4">
+							More information is available on our
+							<a href="/shipping-delivery" class="font-bold text-blue-600 hover:text-blue-700">
+								Shipping & Delivery
+							</a>
+							page.
+						</p>
+					</section>
+
+					<section id="returns" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">9. Returns, Refunds & Cancellations</h2>
+
+						<p class="mt-4">
+							Eligibility for a return, refund, replacement or cancellation depends on the
+							circumstances of the transaction, the type and condition of the product, applicable
+							manufacturer or supplier requirements and applicable law.
+						</p>
+
+						<p class="mt-4">
+							Please review our
+							<a href="/returns" class="font-bold text-blue-600 hover:text-blue-700">
+								Returns information
+							</a>
+							before requesting a return or refund.
+						</p>
+					</section>
+
+					<section id="warranty" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">10. Product Warranties</h2>
+
+						<p class="mt-4">
+							Warranty coverage varies by product, manufacturer, supplier and applicable warranty
+							terms. TweakMart does not represent that every product carries the same warranty
+							period or coverage.
+						</p>
+
+						<p class="mt-4">
+							See our
+							<a href="/warranty" class="font-bold text-blue-600 hover:text-blue-700">
+								Warranty information
+							</a>
+							for additional guidance.
+						</p>
+					</section>
+
+					<section id="business" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">11. Quotes & Business Orders</h2>
+
+						<p class="mt-4">
+							Quotations and bulk-order proposals may contain specific pricing, availability,
+							validity periods, delivery arrangements or other terms applicable to that transaction.
+						</p>
+
+						<p class="mt-4">
+							Where transaction-specific terms are included in a quotation or agreement, those terms
+							apply to the relevant transaction together with these Terms.
+						</p>
+					</section>
+
+					<section id="support" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">12. Technical Support</h2>
+
+						<p class="mt-4">
+							Technical support requests may require assessment before scope, scheduling, pricing or
+							availability can be confirmed.
+						</p>
+
+						<p class="mt-4">
+							Submitting a support request does not by itself guarantee a particular response time,
+							resolution time or service outcome unless separately agreed.
+						</p>
+					</section>
+
+					<section id="accounts" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">13. Accounts</h2>
+
+						<p class="mt-4">
+							Where TweakMart provides account functionality, you are responsible for providing
+							accurate account information and taking reasonable steps to protect your credentials.
+						</p>
+					</section>
+
+					<section id="acceptable-use" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">14. Acceptable Use</h2>
+
+						<p class="mt-4">
+							You must not misuse TweakMart, attempt unauthorized access, interfere with platform
+							operation, submit fraudulent transactions or use our systems for unlawful purposes.
+						</p>
+
+						<p class="mt-4">
+							Our
+							<a href="/acceptable-use" class="font-bold text-blue-600 hover:text-blue-700">
+								Acceptable Use Policy
+							</a>
+							provides additional details.
+						</p>
+					</section>
+
+					<section id="intellectual-property" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">15. Intellectual Property</h2>
+
+						<p class="mt-4">
+							TweakMart's website, branding, interface, proprietary content, software and other
+							materials owned by CloudTweak Technologies Limited are protected by applicable
+							intellectual-property rights.
+						</p>
+
+						<p class="mt-4">
+							Third-party product names, trademarks, images and other materials remain the property
+							of their respective owners.
+						</p>
+					</section>
+
+					<section id="third-parties" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">16. Third-Party Services</h2>
+
+						<p class="mt-4">
+							TweakMart may integrate with payment, logistics, infrastructure or other third-party
+							services. Third-party services may be governed by separate terms and policies.
+						</p>
+					</section>
+
+					<section id="liability" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">17. Liability</h2>
+
+						<p class="mt-4">
+							Nothing in these Terms excludes or limits rights or liabilities that cannot lawfully
+							be excluded or limited.
+						</p>
+
+						<p class="mt-4">
+							To the extent permitted by applicable law, TweakMart and CloudTweak Technologies
+							Limited are not responsible for losses caused by circumstances outside our reasonable
+							control, unauthorized misuse of the platform by a user, or third-party services
+							outside our control.
+						</p>
+					</section>
+
+					<section id="indemnity" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">18. Your Responsibility</h2>
+
+						<p class="mt-4">
+							You are responsible for your use of TweakMart and for information and instructions you
+							provide to us. You must not use our services in a manner that violates applicable law
+							or the rights of others.
+						</p>
+					</section>
+
+					<section id="law" class="scroll-mt-24">
+						<div class="flex items-center gap-3">
+							<Scale class="size-6 text-blue-600" />
+							<h2 class="text-2xl font-black text-slate-950">19. Applicable Law</h2>
+						</div>
+
+						<p class="mt-4">
+							These Terms are governed by the laws of the Federal Republic of Nigeria, subject to
+							any mandatory rights or protections that apply under applicable law.
+						</p>
+					</section>
+
+					<section id="changes" class="scroll-mt-24">
+						<h2 class="text-2xl font-black text-slate-950">20. Changes to These Terms</h2>
+
+						<p class="mt-4">
+							We may update these Terms where reasonably necessary to reflect changes to TweakMart,
+							our business practices or applicable requirements. The effective date at the top
+							identifies the current version.
+						</p>
+					</section>
+
+					<section id="contact" class="scroll-mt-24">
+						<div class="flex items-center gap-3">
+							<ShieldCheck class="size-6 text-blue-600" />
+
+							<h2 class="text-2xl font-black text-slate-950">21. Contact Us</h2>
+						</div>
+
+						<p class="mt-4">
+							If you have questions about these Terms, an order or a TweakMart service, please
+							<a href="/technical-support" class="font-bold text-blue-600 hover:text-blue-700">
+								contact TweakMart
+							</a>.
+						</p>
+					</section>
+				</div>
+			</article>
+		</div>
+	</section>
+</Layout>

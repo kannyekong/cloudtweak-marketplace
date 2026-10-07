@@ -1,0 +1,168 @@
+---
+import { AlertTriangle, Ban, CheckCircle2, Scale, ShieldCheck } from 'lucide-astro';
+
+import Layout from '../layouts/PrimaryLayout.astro';
+---
+
+<Layout
+	title="Acceptable Use Policy | TweakMart"
+	description="The rules governing acceptable use of the TweakMart website, services and technology platform."
+>
+	<section class="border-b border-slate-200">
+		<div class="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 md:py-20 xl:px-8">
+			<div class="max-w-3xl">
+				<div
+					class="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700"
+				>
+					<ShieldCheck class="size-4" />
+					Platform Guidelines
+				</div>
+
+				<h1 class="mt-5 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
+					Acceptable Use Policy
+				</h1>
+
+				<p class="mt-5 max-w-2xl text-base leading-8 text-slate-600">
+					This policy explains how TweakMart may and may not be used and helps us maintain a secure
+					and reliable technology commerce platform for everyone.
+				</p>
+
+				<p class="mt-5 text-sm font-semibold text-slate-500">Effective date: 8 September 2026</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="bg-white">
+		<div class="mx-auto max-w-4xl px-4 py-12 sm:px-6 md:py-16 xl:px-8">
+			<div
+				class="rounded-2xl border border-blue-100 bg-blue-50 p-5 text-sm leading-7 text-slate-700"
+			>
+				TweakMart is a product of
+				<strong>CloudTweak Technologies Limited</strong>. By using TweakMart, you agree to use the
+				platform lawfully and in accordance with this Acceptable Use Policy.
+			</div>
+
+			<div class="mt-12 space-y-12 text-[15px] leading-8 text-slate-600">
+				<section>
+					<div class="flex items-center gap-3">
+						<CheckCircle2 class="size-6 text-blue-600" />
+						<h2 class="text-2xl font-black text-slate-950">1. Appropriate Use</h2>
+					</div>
+
+					<p class="mt-4">
+						You may use TweakMart to browse and purchase products, request quotations, make
+						legitimate business enquiries, request technical support, manage your orders and use
+						other functionality we make available.
+					</p>
+
+					<p class="mt-4">
+						Information you provide should be accurate, appropriate for the requested service and
+						submitted in good faith.
+					</p>
+				</section>
+
+				<section>
+					<div class="flex items-center gap-3">
+						<Ban class="size-6 text-red-500" />
+						<h2 class="text-2xl font-black text-slate-950">2. Prohibited Activities</h2>
+					</div>
+
+					<p class="mt-4">You must not use TweakMart to:</p>
+
+					<ul class="mt-4 space-y-3">
+						<li>• Engage in fraudulent, deceptive, unlawful or abusive activity.</li>
+						<li>• Submit false orders, payment information, identities or business enquiries.</li>
+						<li>
+							• Attempt unauthorized access to accounts, databases, servers, APIs or other systems.
+						</li>
+						<li>• Introduce malware, malicious scripts, viruses or other harmful code.</li>
+						<li>
+							• Probe, scan, test or attempt to circumvent security or authentication mechanisms
+							without authorization.
+						</li>
+						<li>
+							• Scrape, crawl or automatically extract substantial platform data without our
+							permission.
+						</li>
+						<li>
+							• Interfere with the availability, performance or normal operation of TweakMart.
+						</li>
+						<li>
+							• Abuse forms, APIs, support channels, promotional offers, checkout or payment
+							systems.
+						</li>
+						<li>• Impersonate another individual, organization or TweakMart representative.</li>
+						<li>• Infringe intellectual property, privacy or other legal rights.</li>
+					</ul>
+				</section>
+
+				<section>
+					<div class="flex items-center gap-3">
+						<AlertTriangle class="size-6 text-amber-500" />
+						<h2 class="text-2xl font-black text-slate-950">3. Platform Security</h2>
+					</div>
+
+					<p class="mt-4">
+						You must not deliberately attempt to defeat security, validation, fraud-prevention,
+						rate-limiting, payment or access-control measures implemented by TweakMart.
+					</p>
+
+					<p class="mt-4">
+						If you discover a suspected security vulnerability, please report it to us rather than
+						exploiting it or accessing information beyond what is necessary to identify the issue.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-2xl font-black text-slate-950">4. Account Responsibility</h2>
+
+					<p class="mt-4">
+						Where account functionality is available, you are responsible for maintaining the
+						confidentiality of your credentials and for activity performed through your account,
+						subject to applicable law.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-2xl font-black text-slate-950">5. Enforcement</h2>
+
+					<p class="mt-4">
+						Where we reasonably believe this Policy has been violated, we may take proportionate
+						steps including restricting functionality, cancelling fraudulent or abusive requests,
+						suspending access, preserving relevant evidence or referring unlawful activity to
+						appropriate authorities where required or permitted by law.
+					</p>
+				</section>
+
+				<section>
+					<div class="flex items-center gap-3">
+						<Scale class="size-6 text-blue-600" />
+						<h2 class="text-2xl font-black text-slate-950">6. Relationship to Other Terms</h2>
+					</div>
+
+					<p class="mt-4">
+						This Acceptable Use Policy forms part of the rules governing use of TweakMart and should
+						be read together with our
+						<a href="/terms" class="font-bold text-blue-600 hover:text-blue-700">
+							Terms and Conditions
+						</a>
+						and
+						<a href="/privacy" class="font-bold text-blue-600 hover:text-blue-700">
+							Privacy Policy
+						</a>.
+					</p>
+				</section>
+
+				<section>
+					<h2 class="text-2xl font-black text-slate-950">7. Contact</h2>
+
+					<p class="mt-4">
+						If you have questions about this Policy or need to report suspected misuse of TweakMart,
+						please
+						<a href="/technical-support" class="font-bold text-blue-600 hover:text-blue-700"> contact us</a>.
+					</p>
+				</section>
+			</div>
+		</div>
+	</section>
+</Layout>

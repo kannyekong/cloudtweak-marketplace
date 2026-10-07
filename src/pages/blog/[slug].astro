@@ -1,0 +1,274 @@
+---
+import {
+	ArrowLeft,
+	ArrowRight,
+	BookOpen,
+	CalendarDays,
+	Facebook,
+	Linkedin,
+	Twitter,
+} from 'lucide-astro';
+
+import PrimaryLayout from '../../layouts/PrimaryLayout.astro';
+import TiptapViewer from '../../components/blog/TiptapViewer';
+
+import {
+	getPublishedTweakMartPosts,
+	getRelatedTweakMartPosts,
+	getTweakMartPostBySlug,
+} from '../../lib/tweakmart/blog';
+
+export async function getStaticPaths() {
+	const posts = await getPublishedTweakMartPosts();
+
+	return posts.map((post) => ({
+		params: {
+			slug: post.slug,
+		},
+	}));
+}
+
+export const prerender = true;
+
+const { slug } = Astro.params;
+
+const post = await getTweakMartPostBySlug(slug!);
+
+if (!post) {
+	return Astro.redirect('/blog');
+}
+
+const relatedPosts = await getRelatedTweakMartPosts(post.slug);
+
+const siteUrl = Astro.site?.toString() ?? 'https://mart.cloudtweak.net';
+
+const articleUrl = post.canonical_url || new URL(`/blog/${post.slug}`, siteUrl).toString();
+
+const encodedArticleUrl = encodeURIComponent(articleUrl);
+
+const encodedArticleTitle = encodeURIComponent(post.title);
+
+const publishedDate = new Intl.DateTimeFormat('en-NG', {
+	day: 'numeric',
+	month: 'long',
+	year: 'numeric',
+}).format(new Date(post.published_at ?? post.created_at));
+
+const articleSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Article',
+	headline: post.title,
+	description: post.seo_description || post.excerpt,
+	image: post.cover_image,
+	datePublished: post.published_at ?? post.created_at,
+	dateModified: post.updated_at ?? post.created_at,
+	author: {
+		'@type': 'Organization',
+		name: 'TweakMart',
+	},
+	publisher: {
+		'@type': 'Organization',
+		name: 'TweakMart',
+	},
+	mainEntityOfPage: {
+		'@type': 'WebPage',
+		'@id': articleUrl,
+	},
+};
+---
+
+<PrimaryLayout
+	title={post.seo_title || `${post.title} | TweakMart`}
+	description={post.seo_description || post.excerpt || ''}
+>
+	<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+	<article class="bg-white">
+		<header class="border-b border-slate-200">
+			<div class="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+				<a
+					href="/blog"
+					class="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 transition hover:text-blue-600"
+				>
+					<ArrowLeft size={16} />
+					TweakMart Blog
+				</a>
+
+				<div class="mt-7 flex flex-wrap items-center gap-3">
+					<span class="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-700">
+						{post.category ?? 'General'}
+					</span>
+
+					<span class="inline-flex items-center gap-1.5 text-sm text-slate-500">
+						<CalendarDays size={15} />
+						{publishedDate}
+					</span>
+				</div>
+
+				<h1
+					class="mt-5 text-3xl font-bold leading-tight tracking-tight text-slate-950 sm:text-4xl md:text-5xl"
+				>
+					{post.title}
+				</h1>
+
+				{
+					post.excerpt && (
+						<p class="mt-5 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+							{post.excerpt}
+						</p>
+					)
+				}
+
+				<div
+					class="mt-7 flex flex-col gap-4 border-t border-slate-200 pt-5 sm:flex-row sm:items-center sm:justify-between"
+				>
+					<div>
+						<p class="text-sm font-bold text-slate-900">TweakMart Editorial</p>
+
+						<p class="mt-1 text-xs text-slate-500">
+							Technology buying guides and practical insights
+						</p>
+					</div>
+
+					<div class="flex items-center gap-2">
+						<a
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Share on LinkedIn"
+							title="Share on LinkedIn"
+							href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedArticleUrl}`}
+							class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-white transition hover:bg-blue-700"
+						>
+							<Linkedin size={17} />
+						</a>
+
+						<a
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Share on X"
+							title="Share on X"
+							href={`https://twitter.com/intent/tweet?url=${encodedArticleUrl}&text=${encodedArticleTitle}`}
+							class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-slate-950 text-white transition hover:bg-slate-800"
+						>
+							<Twitter size={17} />
+						</a>
+
+						<a
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Share on Facebook"
+							title="Share on Facebook"
+							href={`https://www.facebook.com/sharer/sharer.php?u=${encodedArticleUrl}`}
+							class="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-blue-700 text-white transition hover:bg-blue-800"
+						>
+							<Facebook size={17} />
+						</a>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		{
+			post.cover_image && (
+				<div class="mx-auto max-w-6xl px-4 pt-8 sm:px-6 lg:px-8">
+					<figure class="overflow-hidden rounded-3xl border border-slate-200 bg-slate-100">
+						<img
+							src={post.cover_image}
+							alt={post.title}
+							width="1200"
+							height="675"
+							loading="eager"
+							fetchpriority="high"
+							class="aspect-[16/9] w-full object-cover"
+						/>
+					</figure>
+				</div>
+			)
+		}
+
+		<div class="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+			<TiptapViewer content={post.content as any} />
+
+			<div class="mt-12 pt-8">
+				<div
+					class="rounded-2xl bg-slate-50 p-5 sm:flex sm:items-center sm:justify-between sm:gap-6"
+				>
+					<div>
+						<p class="font-bold text-slate-950">Looking for the right technology?</p>
+
+						<p class="mt-1 text-sm leading-6 text-slate-600">
+							Explore TweakMart products or request help sourcing technology for your organization.
+						</p>
+					</div>
+
+					<div class="mt-4 flex flex-wrap gap-3 sm:mt-0 sm:shrink-0">
+						<a
+							href="/products"
+							class="inline-flex items-center gap-2 rounded-xl bg-[#000033] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700"
+						>
+							Shop products
+							<ArrowRight size={16} />
+						</a>
+
+						<a
+							href="/request-quote"
+							class="inline-flex items-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-100"
+						>
+							Request quote
+						</a>
+					</div>
+				</div>
+			</div>
+
+			{
+				relatedPosts.length > 0 && (
+					<section class="mt-14 border-t border-slate-200 pt-10">
+						<p class="text-sm font-bold text-blue-600">More from TweakMart</p>
+
+						<h2 class="mt-1 text-2xl font-bold text-slate-950">Continue reading</h2>
+
+						<div class="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+							{relatedPosts.map((article) => (
+								<a
+									href={`/blog/${article.slug}`}
+									class="group overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-1 hover:shadow-lg"
+								>
+									{article.cover_image ? (
+										<div class="overflow-hidden">
+											<img
+												src={article.cover_image}
+												alt={article.title}
+												width="600"
+												height="338"
+												loading="lazy"
+												class="aspect-[16/9] w-full object-cover transition duration-500 group-hover:scale-105"
+											/>
+										</div>
+									) : (
+										<div class="flex aspect-[16/9] items-center justify-center bg-slate-100">
+											<BookOpen size={30} class="text-slate-300" />
+										</div>
+									)}
+
+									<div class="p-4">
+										<p class="text-xs font-bold text-blue-600">{article.category ?? 'General'}</p>
+
+										<h3 class="mt-2 line-clamp-2 font-bold leading-6 text-slate-950 transition group-hover:text-blue-600">
+											{article.title}
+										</h3>
+
+										{article.excerpt && (
+											<p class="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">
+												{article.excerpt}
+											</p>
+										)}
+									</div>
+								</a>
+							))}
+						</div>
+					</section>
+				)
+			}
+		</div>
+	</article>
+</PrimaryLayout>
