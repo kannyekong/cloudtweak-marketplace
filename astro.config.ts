@@ -2,6 +2,7 @@ import solidJs from '@astrojs/solid-js';
 import tailwind from '@astrojs/tailwind';
 import icon from 'astro-icon';
 import { defineConfig, envField } from 'astro/config';
+import vercel from '@astrojs/vercel/serverless';
 
 /* Configures the TweakMart Astro storefront. */
 export default defineConfig({
@@ -16,6 +17,9 @@ export default defineConfig({
 	site: 'http://localhost:4321',
 
 	output: 'server',
+
+	adapter: vercel(),
+
 
 	vite: {
 		build: {
