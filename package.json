@@ -4,7 +4,7 @@
 	"version": "0.1.0",
 	"license": "MIT",
 	"engines": {
-		"node": "20.17.0"
+		"node": "24.x"
 	},
 	"scripts": {
 		"dev:ci": "doppler run pnpm openapi-ts && doppler run astro dev",
