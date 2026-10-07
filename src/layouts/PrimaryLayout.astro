@@ -3,7 +3,6 @@ import SiteFooter from '~/components/layout/SiteFooter.astro';
 import SiteHeader from '~/components/layout/SiteHeader.astro';
 // import { SolidQueryDevtools } from "~/components/SolidQueryDevtools.tsx";
 import CookieConsent from '../features/privacy/CookieConsent';
-import { FATHOM_SITE_ID } from 'astro:env/client';
 
 import '../styles.css';
 import SiteRibbon from '~/components/layout/SiteRibbon.astro';
@@ -51,19 +50,6 @@ const { fullWidth = false } = Astro.props;
 			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
 			rel="stylesheet"
 		/>
-
-		<!-- <SEO {...seo} {title} /> -->
-
-		{
-			FATHOM_SITE_ID && (
-				<script
-					src="https://cdn.usefathom.com/script.js"
-					data-site={FATHOM_SITE_ID}
-					is:inline
-					defer
-				/>
-			)
-		}
 	</head>
 
 	<body class="min-h-screen text-theme-base-900">
