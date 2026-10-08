@@ -1,13 +1,5 @@
 ---
-import {
-	Handbag,
-	Headphones,
-	Layers,
-	LayoutGrid,
-	ShieldCheck,
-	ShoppingCart,
-	Truck,
-} from 'lucide-astro';
+import { Handbag, Headphones, Layers, ShieldCheck, ShoppingCart, Truck } from 'lucide-astro';
 import TypewriterText from '@astroanimate/core/TypewriterText';
 import { supabase } from '~/lib/supabase';
 import { RiFinanceMoneyDollarBoxFill } from 'solid-icons/ri';
@@ -56,7 +48,7 @@ const banners = (featuredBanners ?? []) as FeaturedBanner[];
 	>
 		<div class="max-w-2xl">
 			<h1
-				class="max-w-2xl text-5xl font-extrabold leading-[1.08] tracking-tight text-blue-700 sm:text-5xl md:text-white lg:text-6xl"
+				class="max-w-2xl text-4xl font-extrabold leading-[1.08] tracking-tight text-blue-700 sm:text-5xl md:text-white lg:text-6xl"
 			>
 				Everything you need to power your
 				<span class="text-pink-500">
